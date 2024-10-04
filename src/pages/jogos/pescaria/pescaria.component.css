@@ -1,0 +1,99 @@
+/* Estilos gerais para um visual infantil */
+body {
+  font-family: 'Comic Sans MS', sans-serif; /* Fonte mais lúdica e infantil */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  margin: 0;
+  background-color: #e0f7fa; /* Fundo azul-claro */
+}
+
+/* Estilo do canvas */
+canvas {
+  background: linear-gradient(to bottom, #87CEEB 40%, #00BFFF); /* Céu e água */
+  border: 4px solid #1E90FF; /* Borda azul vibrante */
+  border-radius: 15px; /* Bordas arredondadas para um visual amigável */
+  margin-bottom: 20px;
+}
+
+/* Medidor de potência */
+progress {
+  width: 300px;
+  height: 25px;
+  border-radius: 10px;
+  overflow: hidden;
+  appearance: none;
+}
+
+/* Cor da barra de progresso */
+progress::-webkit-progress-value {
+  background-color: #ffcc00; /* Amarelo vibrante para a barra */
+  border-radius: 10px;
+}
+
+progress::-webkit-progress-bar {
+  background-color: #ffeb3b; /* Fundo do medidor */
+}
+
+/* Botão de início */
+button {
+  background-color: #ff5722; /* Cor laranja viva */
+  color: white;
+  padding: 10px 20px;
+  font-size: 18px;
+  border: none;
+  border-radius: 15px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+button:hover {
+  background-color: #ff7043; /* Tom mais claro ao passar o mouse */
+}
+
+/* Estilo da pontuação e do tempo */
+h3 {
+  font-size: 22px;
+  color: #00796b; /* Verde amigável */
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
+}
+
+/* Div que contém o medidor de potência */
+div {
+  text-align: center;
+  margin-bottom: 10px;
+}
+
+/* Estilo do rótulo do medidor de potência */
+label {
+  font-size: 18px;
+  color: #00796b; /* Cor verde para contraste amigável */
+  margin-right: 10px;
+}
+
+/* Ajustes para o visual infantil no geral */
+body::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 150px;
+  background-image: url('https://example.com/path-to-clouds.png'); /* Exemplo: adicionar nuvens no céu */
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+canvas::before {
+  content: '';
+  position: absolute;
+  top: 350px;
+  left: 0;
+  right: 0;
+  height: 150px;
+  background-image: url('https://example.com/path-to-fish.png'); /* Exemplo: peixes estilizados ao fundo */
+  background-repeat: no-repeat;
+  background-size: cover;
+}

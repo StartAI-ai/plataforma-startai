@@ -1,1 +1,10 @@
-<p>pescaria works!</p>
+<canvas #gameCanvas width="800" height="600" style="border:1px solid #000;"></canvas>
+<div>
+  <label for="power">Potência: {{ powerLevel }}</label>
+  <progress id="power" [value]="powerLevel" max="100"></progress>
+</div>
+<div>
+  <button (click)="startGame()">Iniciar Jogo</button>
+  <h3>Pontuação: {{ score }}</h3>
+  <h3>Tempo Restante: {{ timeRemaining }} segundos</h3>
+</div>
