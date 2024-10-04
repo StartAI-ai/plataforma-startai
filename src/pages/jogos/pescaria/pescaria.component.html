@@ -1,10 +1,38 @@
-<canvas #gameCanvas width="800" height="600" style="border:1px solid #000;"></canvas>
-<div>
-  <label for="power">Potência: {{ powerLevel }}</label>
-  <progress id="power" [value]="powerLevel" max="100"></progress>
-</div>
-<div>
-  <button (click)="startGame()">Iniciar Jogo</button>
-  <h3>Pontuação: {{ score }}</h3>
-  <h3>Tempo Restante: {{ timeRemaining }} segundos</h3>
+<div class="container">
+  <!-- Sidebar para ícones à esquerda -->
+  <div class="sidebar">
+    <button class="back-button">
+      <!-- Ícone de voltar -->
+    </button>
+    <div class="logo">
+      <!-- Ícone do robô -->
+    </div>
+  </div>
+
+  <!-- Área principal que inclui o jogo e informações -->
+  <div class="main-content">
+    <div class="game-area">
+      <!-- A tela do jogo será renderizada aqui -->
+      <canvas #gameCanvas></canvas>
+    </div>
+
+    <div class="info-area">
+      <!-- Descrição e placar -->
+      <div class="description">
+        <h2>PESCARIA</h2>
+        <p>
+          Mergulhe em um mundo relaxante e vibrante de pesca! Explore lagos serenos e rios encantados, onde você pode capturar uma variedade de peixes, desde os mais comuns até os raros.
+        </p>
+      </div>
+
+      <div class="scoreboard">
+        <h3>PLACAR</h3>
+        <ul>
+          <li>🥇 JOGADOR 01</li>
+          <li>🥈 JOGADOR 02</li>
+          <li>🥉 JOGADOR 03</li>
+        </ul>
+      </div>
+    </div>
+  </div>
 </div>
