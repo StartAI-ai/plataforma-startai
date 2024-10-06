@@ -33,7 +33,7 @@ export class LoginComponent {
         next: (response) => {
           if (response.user) {
             console.log(response) 
-            localStorage.setItem('userData', JSON.stringify(response.user));
+            localStorage.setItem('userData', JSON.stringify(response));
             this.router.navigate(['/home']); 
           } else {
             console.error('Login falhou', response);

@@ -2,6 +2,7 @@ import { AfterViewInit, Component, ElementRef, OnDestroy, OnInit, ViewChild } fr
 import { BlinkService } from '../../../service/blink.service';
 import { Subscription, interval } from 'rxjs';
 import { CommonModule } from '@angular/common';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-velha',
@@ -18,23 +19,40 @@ export class VelhaComponent implements OnInit, OnDestroy, AfterViewInit {
   private subscription: Subscription | undefined;
   private blinkSubscription: Subscription | undefined;
 
-  selectedIndex: number = 0;
-  botHasPlayed: boolean = false; // Flag para controlar a jogada do bot
-  cellValues: (string | null)[] = Array(9).fill(null); // Para armazenar os valores das células
+  ReconhecimentoOcular = false;
+  isModalOpen = false;
+  gameActive = true; // Controla o estado do jogo
 
-  constructor(private blinkService: BlinkService) {}
+  selectedIndex: number = 0;
+  botHasPlayed: boolean = false;
+  cellValues: (string | null)[] = Array(9).fill(null);
+  gameMode: number = 2;
+
+  constructor(private blinkService: BlinkService, private router: Router, private route: ActivatedRoute) {}
 
   ngAfterViewInit(): void {
-    this.blinkService.initializeFaceMesh(this.videoElement.nativeElement, this.canvasElement.nativeElement)
-      .catch(error => console.error("Erro ao inicializar FaceMesh:", error));
+    this.route.params.subscribe(params => {
+      this.gameMode = +params['mode'];
+      if (this.gameMode === 2) {
+        this.blinkService.initializeFaceMesh(this.videoElement.nativeElement, this.canvasElement.nativeElement)
+          .catch(error => console.error("Erro ao inicializar FaceMesh:", error));
+      }
+    });
   }
 
   ngOnInit() {
-    this.startSelection();
+    this.route.params.subscribe(params => {
+      this.gameMode = +params['mode'];
+      if (this.gameMode === 2) {
+        this.ReconhecimentoOcular = true;
+        this.iniciarSelecao();
+      }
+    });
 
-    // Subscribe to blink detection
     this.blinkSubscription = this.blinkService.blinkDetected.subscribe(() => {
-      this.onBlinkDetected();
+      if (this.gameMode === 2 && this.gameActive) {
+        this.onBlinkDetected();
+      }
     });
   }
 
@@ -47,19 +65,20 @@ export class VelhaComponent implements OnInit, OnDestroy, AfterViewInit {
     }
   }
 
-  startSelection() {
+  iniciarSelecao() {
     this.subscription = interval(1500).subscribe(() => {
-      this.updateSelection();
+      if (this.gameActive) {
+        this.atualizarSelecao();
+      }
     });
   }
 
-  updateSelection() {
+  atualizarSelecao() {
     const previousCell = document.getElementById(`cell${this.selectedIndex}`);
     if (previousCell) {
       previousCell.classList.remove('selected');
     }
 
-    // Loop até encontrar uma célula não marcada
     do {
       this.selectedIndex = (this.selectedIndex + 1) % 9;
     } while (document.getElementById(`cell${this.selectedIndex}`)?.classList.contains('marcada'));
@@ -70,27 +89,32 @@ export class VelhaComponent implements OnInit, OnDestroy, AfterViewInit {
     }
   }
 
-  selectCell(index: number) {
-    if (!this.cellValues[index]) {
-      this.cellValues[index] = 'X'; // Atualiza cellValues antes de marcar a célula
+  selecionarCelula(index: number) {
+    if (!this.cellValues[index] && this.gameActive) {
+      this.cellValues[index] = 'X';
       const jogadorCell = document.getElementById(`cell${index}`);
-  
+
       if (jogadorCell) {
-        jogadorCell.classList.add('marcada'); 
-        jogadorCell.classList.add('jogador'); 
-        jogadorCell.innerHTML = 'X'; 
+        jogadorCell.classList.add('marcada');
+        jogadorCell.classList.add('jogador');
+        jogadorCell.innerHTML = 'X';
       }
-  
-      this.botHasPlayed = false; // Reseta a flag após o jogador jogar
-  
-      // Após o jogador selecionar uma célula, o bot faz sua jogada
-      setTimeout(() => this.botPlay(), 100); // Espera meio segundo para o bot jogar
+
+      const vencedor = this.verificarVencedor();
+      if (vencedor) {
+        this.isModalOpen = true;
+        this.gameActive = false; // O jogo não está mais ativo
+        return;
+      }
+
+      this.botHasPlayed = false;
+
+      setTimeout(() => this.jogadaBot(), 100);
     }
   }
-  
 
-  private botPlay() {
-    if (this.botHasPlayed) return; // Verifica se o bot já jogou nesta rodada
+  private jogadaBot() {
+    if (this.botHasPlayed || !this.gameActive) return;
 
     let availableCells: number[] = [];
     for (let i = 0; i < 9; i++) {
@@ -105,15 +129,48 @@ export class VelhaComponent implements OnInit, OnDestroy, AfterViewInit {
       this.cellValues[botCellIndex] = 'O';
       const botCell = document.getElementById(`cell${botCellIndex}`);
       if (botCell) {
-          botCell.classList.add('marcada'); 
-          botCell.classList.add('bot'); 
-          botCell.innerHTML = 'O'; 
+        botCell.classList.add('marcada');
+        botCell.classList.add('bot');
+        botCell.innerHTML = 'O';
       }
-      this.botHasPlayed = true; 
+
+      const vencedor = this.verificarVencedor();
+      if (vencedor) {
+        this.isModalOpen = true;
+        this.gameActive = false; // O jogo não está mais ativo
+        return;
+      }
+
+      this.botHasPlayed = true;
     }
-    }
+  }
 
   private onBlinkDetected() {
-    this.selectCell(this.selectedIndex); // Seleciona a célula atualmente destacada ao piscar
+    this.selecionarCelula(this.selectedIndex);
+  }
+
+  private verificarVencedor(): string | null {
+    const combinacoesVitoria = [
+      [0, 1, 2], [3, 4, 5], [6, 7, 8],
+      [0, 3, 6], [1, 4, 7], [2, 5, 8],
+      [0, 4, 8], [2, 4, 6]
+    ];
+
+    for (const combinacao of combinacoesVitoria) {
+      const [a, b, c] = combinacao;
+      if (this.cellValues[a] && this.cellValues[a] === this.cellValues[b] && this.cellValues[a] === this.cellValues[c]) {
+        return this.cellValues[a];
+      }
+    }
+
+    if (!this.cellValues.includes(null)) {
+      return 'Empate';
+    }
+
+    return null;
+  }
+
+  voltar(): void {
+    this.router.navigate(['/home']);
   }
 }
