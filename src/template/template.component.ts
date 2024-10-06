@@ -16,13 +16,25 @@ export class TemplateComponent {
 
   isDesktop = true;
   isLoading = false;
+  isLogado = false;
 
   constructor(private authService: AuthService,@Inject(PLATFORM_ID) private platformId: Object) {
     this.authService.loading$.subscribe(isLoading => {
       this.isLoading = isLoading;
     });
-  }
 
+    this.authService.loading$.subscribe(isLoading => {
+      this.isLoading = isLoading;
+    });
+
+    if (isPlatformBrowser(this.platformId)) {
+      this.checkScreenSize();
+      this.isLogado = this.authService.isAuthenticated();
+    }
+
+    
+  }
+  
 
   @HostListener('window:resize', ['$event'])
   onResize(event: Event) {
@@ -37,7 +49,7 @@ export class TemplateComponent {
 
   private checkScreenSize() {
     if (isPlatformBrowser(this.platformId)) {
-      this.isDesktop = window.innerWidth >= 1024; // Defina o tamanho que você considera como desktop
+      this.isDesktop = window.innerWidth >= 1024; 
     }
   }
 

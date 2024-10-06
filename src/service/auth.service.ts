@@ -38,5 +38,10 @@ export class AuthService {
       .pipe(finalize(() => this.loadingSubject.next(false))); // Para de carregar ao final
   }
   
+  isAuthenticated(): boolean {
+    const userData = localStorage.getItem('userData');
+    return !!userData; 
+  }
+
 
 }
