@@ -17,11 +17,10 @@ export class UnAuthGuard implements CanActivate {
     if (typeof window !== 'undefined' && window.localStorage) {
         const userData = localStorage.getItem('userData');
   
-        if (!userData) {
-          return true;  // O usuário está autenticado
-        } else {
+        if (userData) {
           this.router.navigate(['/home']);
-          return false;  // O usuário não está autenticado
+        } else {
+           return true;  // O usuário está autenticado
         }
     }
 
