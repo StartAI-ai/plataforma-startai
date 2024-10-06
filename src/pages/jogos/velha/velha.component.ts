@@ -3,11 +3,12 @@ import { BlinkService } from '../../../service/blink.service';
 import { Subscription, interval } from 'rxjs';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute, Router } from '@angular/router';
+import { ModalNovoJogoComponent } from '../../../componentes/modal-novo-jogo/modal-novo-jogo.component';
 
 @Component({
   selector: 'app-velha',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, ModalNovoJogoComponent],
   templateUrl: './velha.component.html',
   styleUrl: './velha.component.css'
 })
@@ -20,8 +21,12 @@ export class VelhaComponent implements OnInit, OnDestroy, AfterViewInit {
   private blinkSubscription: Subscription | undefined;
 
   ReconhecimentoOcular = false;
-  isModalOpen = false;
-  gameActive = true; // Controla o estado do jogo
+  gameActive = true; 
+  showVitoria = false;
+  showDerrota = false;
+  showEmpate = false;
+
+  private modalTimer: any;
 
   selectedIndex: number = 0;
   botHasPlayed: boolean = false;
@@ -63,14 +68,20 @@ export class VelhaComponent implements OnInit, OnDestroy, AfterViewInit {
     if (this.blinkSubscription) {
       this.blinkSubscription.unsubscribe();
     }
+    if (this.modalTimer) {
+      clearTimeout(this.modalTimer); 
+    }
+    this.gameActive = false; // Parar ações durante a destruição.
   }
 
   iniciarSelecao() {
-    this.subscription = interval(1500).subscribe(() => {
-      if (this.gameActive) {
-        this.atualizarSelecao();
-      }
-    });
+    if (this.gameActive) {
+      this.subscription = interval(1500).subscribe(() => {
+        if (this.gameActive) {
+          this.atualizarSelecao();
+        }
+      });
+    }
   }
 
   atualizarSelecao() {
@@ -102,7 +113,6 @@ export class VelhaComponent implements OnInit, OnDestroy, AfterViewInit {
 
       const vencedor = this.verificarVencedor();
       if (vencedor) {
-        this.isModalOpen = true;
         this.gameActive = false; // O jogo não está mais ativo
         return;
       }
@@ -136,7 +146,6 @@ export class VelhaComponent implements OnInit, OnDestroy, AfterViewInit {
 
       const vencedor = this.verificarVencedor();
       if (vencedor) {
-        this.isModalOpen = true;
         this.gameActive = false; // O jogo não está mais ativo
         return;
       }
@@ -151,23 +160,75 @@ export class VelhaComponent implements OnInit, OnDestroy, AfterViewInit {
 
   private verificarVencedor(): string | null {
     const combinacoesVitoria = [
-      [0, 1, 2], [3, 4, 5], [6, 7, 8],
-      [0, 3, 6], [1, 4, 7], [2, 5, 8],
-      [0, 4, 8], [2, 4, 6]
+        [0, 1, 2], [3, 4, 5], [6, 7, 8],
+        [0, 3, 6], [1, 4, 7], [2, 5, 8],
+        [0, 4, 8], [2, 4, 6]
     ];
 
     for (const combinacao of combinacoesVitoria) {
-      const [a, b, c] = combinacao;
-      if (this.cellValues[a] && this.cellValues[a] === this.cellValues[b] && this.cellValues[a] === this.cellValues[c]) {
-        return this.cellValues[a];
-      }
+        const [a, b, c] = combinacao;
+        if (this.cellValues[a] && this.cellValues[a] === this.cellValues[b] && this.cellValues[a] === this.cellValues[c]) {
+            if (this.cellValues[a] === 'X') {
+                this.showVitoria = true; // Habilita a vitória para 'X'
+            } else if (this.cellValues[a] === 'O') {
+                this.showDerrota = true; // Habilita a derrota para 'O'
+            }
+            this.gameActive = false; // O jogo não está mais ativo
+
+            // Reinicia o jogo após 5 segundos
+            this.modalTimer = setTimeout(() => {
+              this.reiniciarJogo();
+            }, 5000);
+
+            return this.cellValues[a];
+        }
     }
 
     if (!this.cellValues.includes(null)) {
-      return 'Empate';
+      this.showEmpate = true;
+      // Reinicia o jogo após 5 segundos
+      this.modalTimer = setTimeout(() => {
+        this.reiniciarJogo();
+      }, 5000);
     }
 
     return null;
+  }
+
+  private reiniciarJogo() {
+    this.gameActive = false; // Desativar o jogo antes de reiniciar.
+
+    // Limpar todos os valores das células
+    this.cellValues.fill(null);
+
+    // Remover marcações e conteúdo de todas as células no DOM
+    for (let index = 0; index < this.cellValues.length; index++) {
+      const cell = document.getElementById(`cell${index}`);
+      if (cell) {
+        cell.classList.remove('marcada', 'jogador', 'bot'); // Remover todas as classes
+        cell.innerHTML = ''; // Limpar o conteúdo da célula
+      }
+    }
+
+    // Resetar estados do jogo
+    this.selectedIndex = 0;
+    this.gameActive = true;
+    this.showVitoria = false;
+    this.showDerrota = false;
+    this.showEmpate = false;
+    this.botHasPlayed = false;
+
+    if (this.modalTimer) {
+      clearTimeout(this.modalTimer);
+      this.modalTimer = null;
+    }
+
+    this.route.params.subscribe(params => {
+      this.gameMode = +params['mode'];
+      if (this.gameMode === 2) {
+        this.iniciarSelecao();
+      }
+    });
   }
 
   voltar(): void {
