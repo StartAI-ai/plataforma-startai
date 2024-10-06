@@ -1,1 +1,28 @@
-/* You can add global styles to this file, and also import other style files */
+body {
+    font-family: "Outfit", sans-serif;
+    font-optical-sizing: auto;
+    font-weight: 300;
+    font-style: normal;
+}
+  
+.snackbar {
+    visibility: hidden; /* Escondido por padrão */
+    min-width: 250px; /* Largura mínima */
+    margin-left: -125px; /* Centro horizontalmente */
+    background-color: #333; /* Cor de fundo */
+    color: #fff; /* Cor do texto */
+    text-align: center; /* Texto centralizado */
+    border-radius: 2px; /* Bordas arredondadas */
+    padding: 16px; /* Espaçamento interno */
+    position: fixed; /* Fixo em relação à tela */
+    z-index: 1; /* Sobreposição */
+    left: 50%; /* Centraliza horizontalmente */
+    top: 30px; /* Distância do topo */
+    transition: visibility 0s, opacity 0.5s linear; /* Transição suave */
+    opacity: 0; /* Inicialmente invisível */
+  }
+  
+  .snackbar.show {
+    visibility: visible; /* Mostra o Snackbar */
+    opacity: 1; /* Torna visível */
+  }
