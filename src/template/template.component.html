@@ -1,3 +1,6 @@
-<ng-container>
+<ng-container *ngIf="isDesktop">
     <router-outlet></router-outlet>
+ </ng-container>
+ <ng-container *ngIf="!isDesktop">
+    <span>A Plataforma só está disponível para computadores</span>
 </ng-container>

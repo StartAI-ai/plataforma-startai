@@ -6,7 +6,7 @@ import { AuthGuard } from '../auth/Auth.guard';
 import { UnAuthGuard } from '../auth/UnAuth.guard';
 
 export const routes: Routes = [
-    { path: '', component: InicioComponent, canActivate: [UnAuthGuard] },
+    { path: '', component: LoginComponent, canActivate: [UnAuthGuard] },
     { path: 'cadastro', component: CadastroComponent, canActivate: [UnAuthGuard] },
     { path: 'home', component: InicioComponent, canActivate: [AuthGuard] }
 ];
