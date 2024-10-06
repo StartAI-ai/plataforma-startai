@@ -99,9 +99,6 @@ input {
 /* Estilo de fundo gradiente */
 .fundo-completo {
     height: 100vh;
-    background: linear-gradient(45deg, #7db1ff, #3053aa, #0057FF, #3479FF, #0741B0, #6FA0FF);
-    background-size: 400% 400%;
-    animation: animacao-aquarela 15s ease infinite;
     padding: 100px;
 }
 
@@ -112,23 +109,7 @@ input {
     color: #f1f1f1;
 }
 
-@keyframes animacao-aquarela {
-    0% {
-        background-position: 0% 50%;
-    }
-    25% {
-        background-position: 50% 50%;
-    }
-    50% {
-        background-position: 100% 50%;
-    }
-    75% {
-        background-position: 50% 50%;
-    }
-    100% {
-        background-position: 0% 50%;
-    }
-}
+
 
 /* Estilo para o texto do rodapé fora da caixa de login */
 .texto-rodape {

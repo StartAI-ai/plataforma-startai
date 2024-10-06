@@ -1,9 +1,9 @@
 import { Component } from '@angular/core';
+import { AuthService } from '../../../service/auth.service';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ReactiveFormsModule } from '@angular/forms'; 
 import { Router } from '@angular/router';
-import { UtilService } from '../../service/util.service';
-import { AuthService } from '../../service/auth.service';
+import { UtilService } from '../../../service/util.service';
 
 @Component({
   selector: 'app-cadastro',

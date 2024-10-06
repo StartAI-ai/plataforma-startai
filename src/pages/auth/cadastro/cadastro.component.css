@@ -96,15 +96,6 @@ input, select {
     font-weight: 500;
 }
 
-/* Estilo de fundo gradiente */
-.fundo-completo {
-    height: 100vh;
-    background: linear-gradient(45deg, #7db1ff, #3053aa, #0057FF, #3479FF, #0741B0, #6FA0FF);
-    background-size: 400% 400%;
-    animation: animacao-aquarela 15s ease infinite;
-    padding: 100px;
-}
-
 .div-interna {
     display: flex;
     align-items: center;
@@ -112,23 +103,12 @@ input, select {
     color: #f1f1f1;
 }
 
-@keyframes animacao-aquarela {
-    0% {
-        background-position: 0% 50%;
-    }
-    25% {
-        background-position: 50% 50%;
-    }
-    50% {
-        background-position: 100% 50%;
-    }
-    75% {
-        background-position: 50% 50%;
-    }
-    100% {
-        background-position: 0% 50%;
-    }
+.fundo-completo {
+    height: 100vh;
+    padding: 100px;
 }
+
+
 
 /* Estilo para o texto do rodapé fora da caixa de login */
 .texto-rodape {

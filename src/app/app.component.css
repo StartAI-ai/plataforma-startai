@@ -1,11 +1,31 @@
 :host{
-    height: 100vh;  
-    display: block;
-    font-family: "Outfit", sans-serif;
-    font-optical-sizing: auto;
-    font-weight: 400;
-    font-style: normal;
-    margin: 0;
-  }
+  height: 100vh;  
+  display: block;
+  font-family: "Outfit", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 400;
+  font-style: normal;
+  background: linear-gradient(45deg, #7db1ff, #3053aa, #0057FF, #3479FF, #0741B0, #6FA0FF);
+  background-size: 400% 400%;
+  animation: animacao-aquarela 15s ease infinite;
+  margin: 0;
+}
   
 
+@keyframes animacao-aquarela {
+    0% {
+        background-position: 0% 50%;
+    }
+    25% {
+        background-position: 50% 50%;
+    }
+    50% {
+        background-position: 100% 50%;
+    }
+    75% {
+        background-position: 50% 50%;
+    }
+    100% {
+        background-position: 0% 50%;
+    }
+}
