@@ -26,3 +26,8 @@ body {
     visibility: visible; /* Mostra o Snackbar */
     opacity: 1; /* Torna visível */
   }
+
+  .divider{
+    border-top: 1px solid #3053aa; /* Define a cor e espessura da linha */
+    margin: 20px 0; /
+}

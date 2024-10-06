@@ -39,12 +39,20 @@
         </div>
 
         <div class="bg-lightcoral d-flex flex-column" style="flex-basis: 30%; height: 100%;">
-            <div class="bg-lightyellow" style="height: 30%; display: flex; justify-content: center; align-items: center; margin-bottom: 10px;">
+
+            <div class="container-camera">
                 <video #videoElement autoplay style="display: none;"></video>
-                <canvas #canvasElement style="width: 100%; height: 90%; object-fit: contain;"></canvas> 
+                <canvas #canvasElement></canvas> 
             </div>
-            <div class="bg-lightpink" style="height: 30%; background-color: palevioletred; margin-bottom: 10px">
-                <p>Div 2</p>
+
+            <div class="container-descricao">
+                <span style="font-weight: bold;">JOGO DA VELHA</span>
+                <div class="divider"></div>
+                <p>
+                    Para jogar o jogo da velha com um bot, você é sempre X. Escolha uma casa piscando de acordo com seu padrão. 
+                    O bot será O e fará sua jogada automaticamente. O objetivo é alinhar três X ou bloquear o bot. 
+                    O jogo termina quando alguém vence ou todas as casas são preenchidas. Boa sorte!
+                </p>
             </div>
             <div class="bg-lightgray" style="height: 30%; background-color: green; margin-bottom: 10px">
                 <p>Div 3</p>
