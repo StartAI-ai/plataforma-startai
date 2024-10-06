@@ -5,3 +5,10 @@
 .bg-lightblue {
     background-color: lightblue;
 }
+
+canvas{
+    border: 15px solid #f1f1f1;
+    border-radius: 15px;
+    margin: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}
