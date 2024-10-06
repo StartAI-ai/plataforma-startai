@@ -1,14 +1,59 @@
-.bg-brown {
-    background-color: brown;
-}
-
-.bg-lightblue {
-    background-color: lightblue;
-}
-
 canvas{
     border: 15px solid #f1f1f1;
     border-radius: 15px;
     margin: 10px;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+.container-game{
+    flex-basis: 70%; 
+    position: relative;
+}
+
+.game{
+    width: 90%; 
+    height: 90%; 
+    position: absolute; 
+    top: 5%; 
+    border: 15px solid #f1f1f1;
+    background-color: #f1f1f1;
+    left: 5%; 
+    border-radius: 15px;
+    margin: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    padding: 20px;
+}
+
+.cell {
+    background-color: lightblue;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+}
+  
+.cell.selected {
+    background-color: #3053aa;
+}
+
+.jogo{
+    display: grid; 
+    grid-template-columns: repeat(3, 1fr); 
+    gap: 5px; 
+    height: 100%; 
+    width: 100%;
+}
+
+.cell.jogador {
+    font-size: 30px;
+    color: #3053aa;
+    font-weight: bold;
+    background-color: lightblue;
+}
+
+.cell.bot {
+    font-size: 30px;
+    color: #30aa4e;
+    font-weight: bold;
+    background-color: lightblue;
 }
