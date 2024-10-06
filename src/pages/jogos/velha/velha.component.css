@@ -75,3 +75,19 @@ canvas{
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
     background-color: #f1f1f1;
 }
+
+
+.container-placar{
+    height: 30%; 
+    padding: 10px;
+    border: 15px solid #f1f1f1;
+    border-radius: 15px;
+    margin: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    background-color: #f1f1f1;
+}
+
+.container-placar img{
+    width: 25px;
+    height: 25px;
+}
