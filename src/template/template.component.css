@@ -6,14 +6,14 @@
 }
 
 :host {
-  height: 100%; /* Garante que o HTML e o body ocupem 100% da altura */
+  height: 100% !important;/* Garante que o HTML e o body ocupem 100% da altura */
   margin: 0; /* Remove margens padrão */
 }
 
 .LayoutLogado {
   display: flex;
   flex-direction: column;
-  height: 100vh; /* Usa 100vh para ocupar toda a altura da viewport */
+  height: 100% !important;
 }
 
 .mainConteudo {
