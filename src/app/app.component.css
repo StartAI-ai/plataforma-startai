@@ -1,5 +1,5 @@
 :host{
-  height: 100vh;  
+  height: 100% !important;
   display: block;
   font-family: "Outfit", sans-serif;
   font-optical-sizing: auto;
