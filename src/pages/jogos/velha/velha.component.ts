@@ -59,6 +59,7 @@ export class VelhaComponent implements OnInit, OnDestroy, AfterViewInit {
         this.onBlinkDetected();
       }
     });
+    
   }
 
   ngOnDestroy() {
@@ -71,7 +72,11 @@ export class VelhaComponent implements OnInit, OnDestroy, AfterViewInit {
     if (this.modalTimer) {
       clearTimeout(this.modalTimer); 
     }
-    this.gameActive = false; // Parar ações durante a destruição.
+    this.gameActive = false; 
+
+    if (this.ReconhecimentoOcular) {
+      this.blinkService.stopCamera(this.videoElement.nativeElement);
+    }
   }
 
   iniciarSelecao() {

@@ -29,7 +29,9 @@ export class HomeComponent {
   }
 
   memoria(): void {
-    this.router.navigate(['jogo-memoria']); 
+    if (this.userData) {
+      this.router.navigate(['jogo-memoria', this.userData.controleId]); 
+    }
   }
 
 }

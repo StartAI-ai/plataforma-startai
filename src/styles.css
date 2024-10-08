@@ -36,3 +36,74 @@ html, body {
   height: 100% !important;
   margin: 0;
 }
+
+
+
+/* Jogos */
+canvas{
+  border: 15px solid #f1f1f1;
+  border-radius: 15px;
+  margin: 10px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+.container-game{
+  flex-basis: 70%; 
+  position: relative;
+}
+
+.game{
+  width: 90%; 
+  height: 90%; 
+  position: absolute; 
+  top: 5%; 
+  border: 15px solid #f1f1f1;
+  background-color: #f1f1f1;
+  left: 5%; 
+  border-radius: 15px;
+  margin: 10px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+  padding: 20px;
+}
+
+.jogo{
+  display: grid; 
+  grid-template-columns: repeat(3, 1fr); 
+  gap: 5px; 
+  height: 100%; 
+  width: 100%;
+}
+
+.container-camera{
+  height: 30%; 
+  display: flex; 
+  justify-content: center; 
+  align-items: center; 
+  margin-bottom: 10px
+}
+
+.container-descricao{
+  height: 30%; 
+  padding: 10px;
+  border: 15px solid #f1f1f1;
+  border-radius: 15px;
+  margin: 10px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+  background-color: #f1f1f1;
+}
+
+
+.container-placar{
+  height: 30%; 
+  padding: 10px;
+  border: 15px solid #f1f1f1;
+  border-radius: 15px;
+  margin: 10px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+  background-color: #f1f1f1;
+}
+
+.container-placar img{
+  width: 25px;
+  height: 25px;
+}
