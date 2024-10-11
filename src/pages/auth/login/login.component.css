@@ -1,0 +1,165 @@
+/* Estilos para a área de login */
+.container-login {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+}
+
+.caixa-login {
+    background-color: #f1f1f1;
+    padding: 2rem;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    max-width: 75%;
+    min-height: 70%;
+    width: 100%;
+}
+
+.caixa-login h2 {
+    margin-bottom: 1.5rem;
+    font-weight: bold;
+}
+
+.caixa-login img {
+    margin-bottom: 1rem;
+}
+
+.controle-formulario {
+    margin-bottom: 1.5rem; /* Distância entre os inputs */
+    padding: 0.8rem;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+}
+
+.btn-login {
+    padding: 0.8rem;
+    background-color: #3053aa;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.btn-login:hover {
+    background-color: #0045a0;
+}
+
+.mensagem-bemvindo {
+    color: #f1f1f1;
+}
+
+.mensagem-bemvindo h1 {
+    font-size: 1.8rem;
+}
+
+.mensagem-bemvindo p {
+    font-size: 1rem;
+}
+
+input {
+    background-color: #D9D9D9;
+    border: none;
+}
+
+@media (max-width: 768px) {
+    .container-login {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .mensagem-bemvindo {
+        margin-bottom: 2rem;
+    }
+}
+
+/* Descrição */
+.descricao {
+    padding-top: 100px;
+}
+
+.descricao p {
+    width: 80%;
+    font-weight: 300;
+}
+
+.logo {
+    border-radius: 50%;
+    background-color: #3053aa;
+    height: 80px;
+    width: 80px;
+}
+
+.titulo {
+    color: #3053aa;
+    font-weight: 500;
+}
+
+/* Estilo de fundo gradiente */
+.fundo-completo {
+    height: 100% !important;
+    padding: 100px;
+}
+
+.div-interna {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #f1f1f1;
+}
+
+
+
+/* Estilo para o texto do rodapé fora da caixa de login */
+.texto-rodape {
+    color: #f1f1f1;
+    text-align: center;
+    margin-top: 1rem;
+    position: relative;
+    bottom: 0;
+    width: 100%;
+}
+
+/* Estilizando o link dentro do texto do rodapé */
+.texto-rodape a {
+    color: #f1f1f1;
+    text-decoration: underline;
+    transition: color 0.3s ease;
+}
+
+.texto-rodape a:hover {
+    color: #f1f1f1;
+}
+
+/* Estilos para o formulário de login */
+.caixa-login form {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+}
+
+.controle-formulario {
+    margin-bottom: 1.5rem; /* Distância entre os inputs */
+    padding: 0.8rem;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+}
+
+.btn-login {
+    padding: 0.8rem;
+    background-color: #3053aa;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.btn-login:hover {
+    background-color: #0045a0;
+}
+
+a{
+    cursor: pointer;
+}

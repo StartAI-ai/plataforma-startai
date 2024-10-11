@@ -1,0 +1,34 @@
+.game-container {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr); /* 5 colunas */
+  gap: 10px;
+}
+
+.carta {
+  position: relative;
+  cursor: pointer;
+  border: 1px solid #3053aa;
+  background-color: #f1f1f1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  aspect-ratio: 1; /* Mantém a proporção quadrada */
+  transition: transform 0.2s; /* Transição suave para efeito de seleção */
+}
+
+.carta.selected {
+  border: 5px solid yellow; /* Borda amarela para carta selecionada */
+  background-color: #0f4adf !important; /* Cor de fundo para carta selecionada */
+}
+
+.carta img {
+  max-height: 80%; /* Para evitar que a imagem exceda o tamanho da carta */
+  max-width: 80%;
+}
+
+.card-back {
+  width: 100%;
+  height: 100%;
+  background-color: #ccc; /* Cor do verso da carta */
+  border: 1px solid #3053aa; /* Bordas do verso da carta */
+}

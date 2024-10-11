@@ -1,0 +1,46 @@
+.modal {
+    display: block; /* Força a exibição da modal */
+    position: fixed; /* Posiciona fixamente na tela */
+    top: 0; /* Alinha ao topo da tela */
+    left: 0; /* Alinha à esquerda da tela */
+    width: 100%; /* Largura total da tela */
+    height: 100%; /* Altura total da tela */
+    background-color: rgba(0, 0, 0, 0.5); /* Fundo semi-transparente */
+}
+
+.modal-dialog {
+    width: 60%; /* Aumenta a largura da modal */
+    max-width: 800px; /* Define uma largura máxima, se necessário */
+    height: 20%; /* Define a altura da modal */
+    position: absolute; /* Permite o posicionamento absoluto */
+    top: 20%; /* Posiciona no meio verticalmente */
+    left: 30%; /* Posiciona no meio horizontalmente */
+    transform: translate(-50%, -50%); /* Ajusta para centralizar */
+    margin: 50px;
+}
+
+
+.modal-content {
+    height: 100%; /* Garante que o conteúdo ocupe toda a altura da modal */
+    display: flex; /* Usa flexbox para alinhar o conteúdo */
+    flex-direction: column; /* Alinha os elementos em coluna */
+    justify-content: center; /* Centraliza verticalmente o conteúdo */
+    align-items: center; /* Centraliza horizontalmente o conteúdo */
+    padding: 20px; /* Espaçamento interno */
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5); /* Sombra para destacar a modal */
+    border-radius: 8px; /* Bordas arredondadas */
+    background-color: white; /* Fundo branco */
+}
+
+.modal-header {
+    border-bottom: none; /* Remove a borda do cabeçalho */
+}
+
+.modal-title {
+    margin: 0; /* Remove a margem do título */
+    text-align: center; /* Centraliza o texto do título */
+}
+
+.modal-body {
+    text-align: center; /* Centraliza o texto do corpo */
+}
