@@ -12,6 +12,7 @@ export const routes: Routes = [
     { path: 'cadastro', component: CadastroComponent, canActivate: [UnAuthGuard] },
     { path: 'home', component: HomeComponent, canActivate: [AuthGuard] },
     { path: 'jogo-memoria/:mode', component: MemoriaComponent, canActivate: [AuthGuard] },
-    { path: 'jogo-velha/:mode', component: VelhaComponent, canActivate: [AuthGuard] }
-
+    { path: 'jogo-velha/:mode', component: VelhaComponent, canActivate: [AuthGuard] },
+    { path: 'jogo-pescaria/:mode', component: MemoriaComponent, canActivate: [AuthGuard] },
+    { path: 'jogo-batalha/:mode', component: VelhaComponent, canActivate: [AuthGuard] }
 ];
