@@ -44,5 +44,8 @@ export class CadastroComponent {
     }
   }
 
+  login(): void{
+    this.router.navigate(['']);
+  }
 
 }
