@@ -15,22 +15,25 @@ export class HomeComponent {
   userData = localStorage.getItem('userData') ? JSON.parse(localStorage.getItem('userData')!) : null;
 
   pescaria(): void {
-    // Your logic here
+    if (this.userData) {
+      this.router.navigate(['jogo-pescaria', this.userData.controleId]);
+    }
   }
 
   batalha(): void {
-    // Your logic here
-  }
+    if (this.userData) {
+      this.router.navigate(['jogo-batalha', this.userData.controleId]);
+    }  }
 
   velha(): void {
     if (this.userData) {
-      this.router.navigate(['jogo-velha', this.userData.controleId]); 
+      this.router.navigate(['jogo-velha', this.userData.controleId]);
     }
   }
 
   memoria(): void {
     if (this.userData) {
-      this.router.navigate(['jogo-memoria', this.userData.controleId]); 
+      this.router.navigate(['jogo-memoria', this.userData.controleId]);
     }
   }
 
