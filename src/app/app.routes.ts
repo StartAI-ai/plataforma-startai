@@ -7,8 +7,10 @@ import { HomeComponent } from '../pages/home/home.component';
 import { MemoriaComponent } from '../pages/jogos/memoria/memoria.component';
 import { VelhaComponent } from '../pages/jogos/velha/velha.component';
 import { ControleComponent } from '../pages/controle/controle.component';
+import { RedirectGuard } from '../auth/RedirectGuard.guard';
 
 export const routes: Routes = [
+    { path: '', component: LoginComponent, canActivate: [UnAuthGuard] },
     { path: 'login', component: LoginComponent, canActivate: [UnAuthGuard] },
     { path: 'cadastro', component: CadastroComponent, canActivate: [UnAuthGuard] },
     { path: 'home', component: HomeComponent, canActivate: [AuthGuard] },
