@@ -15,25 +15,71 @@
     <div class="game-area">
       <!-- A tela do jogo será renderizada aqui -->
       <canvas #gameCanvas></canvas>
+
+      <!-- Adicionando a barra de pesca diretamente no componente -->
+      <div #barraAzul class="barra-azul" style="position: absolute; width: 10px; height: 100px; background-color: blue;"></div>
     </div>
 
     <div class="info-area">
-      <!-- Descrição e placar -->
-      <div class="description">
-        <h2>PESCARIA</h2>
-        <p>
-          Mergulhe em um mundo relaxante e vibrante de pesca! Explore lagos serenos e rios encantados, onde você pode capturar uma variedade de peixes, desde os mais comuns até os raros.
-        </p>
-      </div>
+      <div class="container-fluid d-flex flex-column" style="height: 100% !important;">
+        <div class="d-flex align-items-center" style="height: 10%;">
+          <button class="btn btn-light" style="display: flex; align-items: center; margin-left: 40px;" (click)="voltar()">
+            <img src="../../../assets/img/voltar.png" alt="Voltar" style="width: 16px; height: 16px; margin-right: 5px;" /> VOLTAR
+          </button>
+        </div>
 
-      <div class="scoreboard">
-        <h3>PLACAR</h3>
-        <ul>
-          <li>🥇 JOGADOR 01 - 100 pts</li>
-          <li>🥈 JOGADOR 02 - 90 pts</li>
-          <li>🥉 JOGADOR 03 - 85 pts</li>
-        </ul>
+        <div class="d-flex" style="height: 90%;">
+          <div class="flex-grow-1 container-game">
+            <div class="game">
+              <!-- Aqui é onde o jogo de pescaria acontece -->
+            </div>
+          </div>
+
+          <div class="bg-lightcoral d-flex flex-column" style="flex-basis: 30%; height: 100%;">
+            <div class="container-camera" *ngIf="ReconhecimentoOcular">
+              <video #videoElement autoplay style="display: none;"></video>
+              <canvas #canvasElement></canvas>
+            </div>
+
+            <div class="container-descricao">
+              <span style="font-weight: bold;">PESCARIA</span>
+              <div class="divider"></div>
+              <p>
+                Mergulhe em um mundo relaxante e vibrante de pesca! Explore lagos serenos e rios encantados, onde você pode capturar uma variedade de peixes, desde os mais comuns até os raros.
+              </p>
+            </div>
+
+            <div class="container-placar">
+              <span style="font-weight: bold;">PLACAR</span>
+              <div class="divider"></div>
+              <div class="row">
+                <div class="col-12">
+                  <div class="d-flex align-items-center mb-3">
+                    <img src="../../../assets/img/primeiro.png" alt="Imagem 1" class="me-2">
+                    <span>JOGADOR 01</span>
+                  </div>
+                </div>
+                <div class="col-12">
+                  <div class="d-flex align-items-center mb-3">
+                    <img src="../../../assets/img/segundo.png" alt="Imagem 2" class="me-2">
+                    <span>JOGADOR 02</span>
+                  </div>
+                </div>
+                <div class="col-12">
+                  <div class="d-flex align-items-center mb-3">
+                    <img src="../../../assets/img/terceiro.png" alt="Imagem 3" class="me-2">
+                    <span>JOGADOR 03</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
       </div>
     </div>
+
+    <app-modal-novo-jogo *ngIf="showVitoria" [title]="'Parabéns!! Você ganhou!! O que acha de jogar novamente?'"></app-modal-novo-jogo>
+    <app-modal-novo-jogo *ngIf="showDerrota" [title]="'Lamento!! Você perdeu!! O que acha de jogar novamente?'"></app-modal-novo-jogo>
   </div>
 </div>
