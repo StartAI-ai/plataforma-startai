@@ -33,7 +33,7 @@ export class CadastroComponent {
 
       this.authService.cadastro(nome, email, senha, dataNascimento, controle).subscribe({
         next: (response) => {
-          this.router.navigate(['']); 
+          this.router.navigate(['/login']); 
         },
         error: (error) => {
           this.utilService.showSnackbar('Erro ao cadastrar usuário. Tente novamente.');
@@ -44,5 +44,8 @@ export class CadastroComponent {
     }
   }
 
+  login(): void{
+    this.router.navigate(['/login']);
+  }
 
 }

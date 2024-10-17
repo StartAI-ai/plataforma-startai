@@ -1,0 +1,43 @@
+.container {
+    width: 100%; /* Certifique-se de que a largura do contêiner seja 100% */
+    overflow: hidden; /* Para evitar que o conteúdo exceda os limites do contêiner */
+}
+
+.row {
+    display: flex; /* Usa Flexbox para os itens na linha */
+    flex-wrap: wrap; /* Permite que os itens se movam para a próxima linha se necessário */
+    justify-content: center; /* Centraliza os itens horizontalmente */
+}
+
+.quadrado {
+    flex: 1 1 200px; /* Permite que os quadrados cresçam e encolham, com largura mínima de 200px */
+    max-width: 25%; /* Limita a largura máxima a 25% da linha */
+    aspect-ratio: 1; /* Mantém a proporção de 1:1 */
+    background-color: #f1f1f1;
+    margin: 10px; /* Margem entre os quadrados */
+    display: flex; /* Flexbox para centralizar conteúdo */
+    justify-content: center; /* Centraliza horizontalmente */
+    align-items: center; /* Centraliza verticalmente */
+    border-radius: 10px;
+    cursor: pointer;
+    transition: all 0.3s ease-in-out;
+}
+
+.quadrado:hover {
+    background-color: #F1EE4C;
+    transform: scale(1.1);
+}
+
+.quadrado img {
+    width: 80%; /* Ajusta a imagem para ocupar 80% do quadrado */
+    height: auto; /* Mantém a proporção da imagem */
+    transition: all 0.3s ease-in-out;
+}
+
+.full-height {
+    height: 100% !important;
+    display: flex; /* Usando flexbox */
+    flex-direction: column; /* Alinha os itens em coluna */
+    justify-content: center; /* Centraliza verticalmente */
+    align-items: center; /* Centraliza horizontalmente */
+}
