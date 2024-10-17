@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../../../service/auth.service';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ReactiveFormsModule } from '@angular/forms'; 
@@ -12,13 +12,20 @@ import { UtilService } from '../../../service/util.service';
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css']
 })
-export class LoginComponent {
-
+export class LoginComponent implements OnInit {
   loginForm!: FormGroup;
 
-  constructor(private authService: AuthService, private router: Router, private utilService: UtilService) {}
+  constructor(
+    private authService: AuthService, 
+    private router: Router, 
+    private utilService: UtilService
+  ) {}
 
   ngOnInit(): void {
+    this.initializeForm();
+  }
+
+  private initializeForm(): void {
     this.loginForm = new FormGroup({
       email: new FormControl('', [Validators.required, Validators.email]),
       senha: new FormControl('', [Validators.required, Validators.minLength(6)]),
@@ -27,28 +34,32 @@ export class LoginComponent {
 
   onSubmit(): void {
     if (this.loginForm.valid) {
-      const { email, senha } = this.loginForm.value;
-  
-      this.authService.login(email, senha).subscribe({
-        next: (response) => {
-          if (response.user) {
-            console.log(response) 
-            localStorage.setItem('userData', JSON.stringify(response));
-            this.router.navigate(['/home']); 
-          } else {
-            console.error('Login falhou', response);
-          }
-        },
-        error: (error) => {
-          this.utilService.showSnackbar(error);
-        }
-      });
+      this.login();
     } else {
-      this.utilService.showSnackbar('Formulário inválido. Verifique os campos.');
+      alert('Formulário inválido. Verifique os campos.');
     }
   }
+
+  private login(): void {
+    const { email, senha } = this.loginForm.value;
+
+    this.authService.login(email, senha).subscribe({
+      next: (response) => {
+        if (response.user) {
+          localStorage.setItem('userData', JSON.stringify(response));
+          this.router.navigate(['/home']); 
+        } else {
+          alert('Login falhou. Verifique suas credenciais.');
+        }
+      },
+      error: (error) => {
+        const mensagemErro = error.error?.error || 'Erro ao fazer login. Tente novamente.';
+        alert(mensagemErro);
+      }
+    });
+  }
   
-  cadastrar(): void{
+  cadastrar(): void {
     this.router.navigate(['/cadastro']);
   }
 }

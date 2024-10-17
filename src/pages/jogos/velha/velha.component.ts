@@ -4,6 +4,7 @@ import { Subscription, interval } from 'rxjs';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ModalNovoJogoComponent } from '../../../componentes/modal-novo-jogo/modal-novo-jogo.component';
+import { PlacarService } from '../../../service/placar.service';
 
 @Component({
   selector: 'app-velha',
@@ -33,7 +34,9 @@ export class VelhaComponent implements OnInit, OnDestroy, AfterViewInit {
   cellValues: (string | null)[] = Array(9).fill(null);
   gameMode: number = 2;
 
-  constructor(private blinkService: BlinkService, private router: Router, private route: ActivatedRoute) {}
+  listaPontuacoes: { pontuacao: number; Jogador: string }[] = [];
+
+  constructor(private blinkService: BlinkService, private router: Router, private route: ActivatedRoute, private placarService: PlacarService) {}
 
   ngAfterViewInit(): void {
     this.route.params.subscribe(params => {
@@ -59,8 +62,24 @@ export class VelhaComponent implements OnInit, OnDestroy, AfterViewInit {
         this.onBlinkDetected();
       }
     });
-    
+  
+    this.initializePlacar();
   }
+
+  private initializePlacar() {
+   this.placarService.MaioresPontuacoes(1, this.gameMode).subscribe(
+    (response: { pontuacao: number; Jogador: string }[]) => {
+      this.listaPontuacoes = Array.isArray(response) ? response : []; // Verifica se é um array
+    },
+    error => {
+      console.error('Erro ao obter maiores pontuações:', error);
+      this.listaPontuacoes = []; // Garante que a lista está vazia em caso de erro
+    }
+  );
+
+  }
+  
+  
 
   ngOnDestroy() {
     if (this.subscription) {

@@ -63,26 +63,20 @@
                 <span style="font-weight: bold;">PLACAR</span>
                 <div class="divider"></div>
                 <div class="row">
-                    <div class="col-12">
-                        <div class="d-flex align-items-center mb-3">
-                            <img src="../../../assets/img/primeiro.png" alt="Imagem 1" class="me-2">
-                            <span>JOGADOR 01</span>
-                        </div>
+                    <div *ngFor="let pontuacao of listaPontuacoes">
+                        <!-- Exibir pontuação aqui -->
+                        <p>{{ pontuacao.Jogador }}: {{ pontuacao.pontuacao }}</p>
                     </div>
-                    <div class="col-12">
+                      
+                    <div class="col-12" *ngFor="let jogador of listaPontuacoes; let i = index">
                         <div class="d-flex align-items-center mb-3">
-                            <img src="../../../assets/img/segundo.png" alt="Imagem 2" class="me-2">
-                            <span>JOGADOR 02</span>
-                        </div>
-                    </div>
-                    <div class="col-12">
-                        <div class="d-flex align-items-center mb-3">
-                            <img src="../../../assets/img/terceiro.png" alt="Imagem 3" class="me-2">
-                            <span>JOGADOR 03</span>
+                            <img [src]="'../../../assets/img/' + (i === 0 ? 'primeiro.png' : i === 1 ? 'segundo.png' : 'terceiro.png')" alt="Imagem {{ i + 1 }}" class="me-2">
+                            <span>{{ jogador.Jogador }} - {{ jogador.pontuacao }}</span>
                         </div>
                     </div>
                 </div>
             </div>
+            
             
         </div>
     </div>
