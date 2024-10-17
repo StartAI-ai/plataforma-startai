@@ -1,0 +1,91 @@
+/* resete */
+*{
+    margin: 0;
+    padding: 0;
+    border: 0;
+    font-size: 100%;
+    font: inherit;
+    vertical-align: baseline;
+    text-decoration: none;
+}
+
+/* fim resete */
+
+.container{
+    display: flex;
+    width: 96%;
+    padding: 2%;
+    justify-content: space-between;
+}
+.menu{
+    width: 25%;
+    background-color: white;
+    padding: 2%;
+    padding-right: 10%;
+    border-radius: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 50px;
+    margin-left: 0;
+    margin-right: 4%;
+    position: relative;
+}
+
+.nome, .controle{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    white-space: nowrap;
+     margin-right: 50%;
+}
+
+label{
+    width: 100%;
+    color: #3053aa;
+    font-weight: bold;
+}
+
+
+.itens_menu{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+.itens_menu a{
+    font-size: 1.2em;
+    padding-left: 2%;
+    transition: 0.3s;
+}
+.itens_menu .selected{
+    width: 80%;
+    border-radius: 0 50px 50px 0;
+    background-color: #3053aa;
+    padding: 4% 2% 4% 2%;
+    color: white;
+}
+.itens_menu a:hover{
+    width: 80%;
+    border-radius: 0 50px 50px 0;
+    background-color: #3053aa;
+    padding: 4% 2% 4% 2%;
+    color: white;
+}
+
+.titulo_menu{
+    font-weight: bold;
+    color: #3053aa;
+}
+
+.dados_pessoais{
+    width: 100%;
+    background-color: white;
+    padding: 2%;
+    padding-right: 55%;
+    padding-bottom: 40%;
+    border-radius: 20px;
+    display: flex;
+    justify-content: space-between;
+}
+

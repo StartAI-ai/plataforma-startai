@@ -1,0 +1,31 @@
+<div class="container">
+    <div class="menu">
+        <div class="titulo_menu">
+            <h1>CONFIGURAÇÕES</h1>
+        </div>
+        <div class="itens_menu">
+            <a href="/src/pages/perfil/dados/dados.component.html" class="selected">DADOS PESSOAIS</a>
+            <a href="/src/pages/perfil/email/email.component.html">EMAIL</a>
+            <a href="/src/pages/perfil/senha/senha.component.html">SENHA</a>
+        </div>
+    </div>
+    <div class="dados_pessoais">
+        <div class="nome">
+            <label for="email">NOME</label>
+            <input type="name" id="name" class="nome-formulario" formControlName="name" placeholder="Nome" required>
+        </div>
+        <div class="nome">
+            <label for="email">TIPO DE CONTROLE</label>
+            <div>
+                <select class="form-select controle-formulario" formControlName="controle">
+                    <option value="" disabled selected>Controles</option>
+                    <option value="2">Controle Ocular</option>
+                    <option value="3">Teclado</option>
+                </select>
+        </div>
+            
+        </div>
+
+
+    </div>
+</div>
