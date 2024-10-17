@@ -15,7 +15,7 @@ export class ControleComponent implements OnInit {
 
   ngOnInit() {
     this.route.params.subscribe(params => {
-      this.gameMode = params['jogo']; // Converta para número
+      this.gameMode = params['jogo']; 
     });
   }
   
