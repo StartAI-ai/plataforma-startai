@@ -42,8 +42,10 @@ export class AuthService {
 
   // Verifica se o usuário está autenticado
   isAuthenticated(): boolean {
-    const userData = localStorage.getItem('userData');
-    return !!userData;
+    if (typeof window !== 'undefined' && localStorage) {
+      return !!localStorage.getItem('userData'); // Ajuste conforme seu caso
+    }
+    return false; // Para SSR
   }
 
   // Métodos auxiliares

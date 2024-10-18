@@ -78,8 +78,7 @@ export class VelhaComponent implements OnInit, OnDestroy, AfterViewInit {
   );
 
   }
-  
-  
+
 
   ngOnDestroy() {
     if (this.subscription) {

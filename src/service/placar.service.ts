@@ -7,14 +7,13 @@ import { BehaviorSubject, finalize, Observable, catchError, of } from 'rxjs';
   providedIn: 'root'
 })
 export class PlacarService {
-  private apiUrl = 'http://localhost:3000';
+  private apiUrl = 'https://api-53k8.onrender.com';
 
   private loadingSubject = new BehaviorSubject<boolean>(false);
   loading$ = this.loadingSubject.asObservable();
 
   constructor(private http: HttpClient, private router: Router) {}
 
-  // Função de cadastro
   registrarPlacar(nome: string, email: string, senha: string, dataNascimento: string, controle: number): Observable<any> {
     this.loadingSubject.next(true);
     const headers = new HttpHeaders({
