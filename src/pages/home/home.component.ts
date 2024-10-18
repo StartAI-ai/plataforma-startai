@@ -6,40 +6,33 @@ import { Router } from '@angular/router';
   standalone: true,
   imports: [],
   templateUrl: './home.component.html',
-  styleUrl: './home.component.css'
+  styleUrls: ['./home.component.css']
 })
 export class HomeComponent {
+  userData = this.getUserData();
 
   constructor(private router: Router) {}
 
-  userData = localStorage.getItem('userData') ? JSON.parse(localStorage.getItem('userData')!) : null;
-
-  pescaria(): void {
-
-  }
-
-  batalha(): void {
-
+  private getUserData(): any {
+    const userData = localStorage.getItem('userData');
+    return userData ? JSON.parse(userData) : null;
   }
 
   velha(): void {
     if (this.userData) {
-      if(this.userData.controleId == 1){
-        this.router.navigate(['controle','jogo-velha']);
-      } else{
-        this.router.navigate(['jogo-velha', this.userData.controleId]);
-      }
+      const route = this.userData.controleId === 1 ? 
+        ['controle', 'jogo-velha'] : 
+        ['jogo-velha', this.userData.controleId];
+      this.router.navigate(route);
     }
   }
 
   memoria(): void {
     if (this.userData) {
-      if(this.userData.controleId == 1){
-        this.router.navigate(['controle','jogo-memoria']);
-      } else{
-        this.router.navigate(['jogo-memoria', this.userData.controleId]);
-      }
+      const route = this.userData.controleId === 1 ? 
+        ['controle', 'jogo-memoria'] : 
+        ['jogo-memoria', this.userData.controleId];
+      this.router.navigate(route);
     }
   }
-
 }

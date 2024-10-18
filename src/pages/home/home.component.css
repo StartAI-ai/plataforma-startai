@@ -1,23 +1,23 @@
 .container {
-    width: 100%; /* Certifique-se de que a largura do contêiner seja 100% */
-    overflow: hidden; /* Para evitar que o conteúdo exceda os limites do contêiner */
+    width: 100%;
+    overflow: hidden;
 }
 
 .row {
-    display: flex; /* Usa Flexbox para os itens na linha */
-    flex-wrap: wrap; /* Permite que os itens se movam para a próxima linha se necessário */
-    justify-content: center; /* Centraliza os itens horizontalmente */
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
 }
 
 .quadrado {
-    flex: 1 1 200px; /* Permite que os quadrados cresçam e encolham, com largura mínima de 200px */
-    max-width: 25%; /* Limita a largura máxima a 25% da linha */
-    aspect-ratio: 1; /* Mantém a proporção de 1:1 */
+    flex: 1 1 200px;
+    max-width: 25%;
+    aspect-ratio: 1;
     background-color: #f1f1f1;
-    margin: 10px; /* Margem entre os quadrados */
-    display: flex; /* Flexbox para centralizar conteúdo */
-    justify-content: center; /* Centraliza horizontalmente */
-    align-items: center; /* Centraliza verticalmente */
+    margin: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
     border-radius: 10px;
     cursor: pointer;
     transition: all 0.3s ease-in-out;
@@ -29,15 +29,15 @@
 }
 
 .quadrado img {
-    width: 80%; /* Ajusta a imagem para ocupar 80% do quadrado */
-    height: auto; /* Mantém a proporção da imagem */
+    width: 80%;
+    height: auto;
     transition: all 0.3s ease-in-out;
 }
 
 .full-height {
     height: 100% !important;
-    display: flex; /* Usando flexbox */
-    flex-direction: column; /* Alinha os itens em coluna */
-    justify-content: center; /* Centraliza verticalmente */
-    align-items: center; /* Centraliza horizontalmente */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
 }
