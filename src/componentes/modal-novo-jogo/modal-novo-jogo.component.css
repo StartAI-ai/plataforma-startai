@@ -12,7 +12,7 @@
 }
 
 .modal-dialog {
-    width: 25vw; /* 25% da largura da tela */
+    width: 30vw; /* 25% da largura da tela */
     height: 10vh; /* 25% da altura da tela */
     max-width: 800px; /* Limite máximo de largura */
     max-height: 400px; /* Limite máximo de altura */

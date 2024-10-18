@@ -38,9 +38,14 @@ export class MemoriaComponent implements OnInit, AfterViewInit, OnDestroy {
   private indiceAutoSelecionado: number = 0;
   private cartasViradas: Carta[] = [];
   private estaVerificando: boolean = false;
+  private timerSubscription: Subscription | undefined;
 
   gameMode: number = 2;
   gameActive = true;
+
+  tempo: number = 0; // Tempo em segundos
+  pontuacao: number = 0; // Pontuação do jogador
+
 
   jogadores: Jogador[] = [];
 
@@ -64,6 +69,8 @@ export class MemoriaComponent implements OnInit, AfterViewInit, OnDestroy {
       }
     });
 
+    this.iniciarContador(); 
+
   }
 
   getImagemPorIndice(indice: number): string {
@@ -83,12 +90,17 @@ export class MemoriaComponent implements OnInit, AfterViewInit, OnDestroy {
     }
   }
 
+  private iniciarContador() {
+    this.timerSubscription = interval(1000).subscribe(() => {
+      this.tempo++;
+    });
+  }
+
   private carregarMaioresPontuacoes() {
     const id_jogo = 2; 
     const id_controle = this.gameMode; 
 
     this.placarService.MaioresPontuacoes(id_jogo, id_controle).subscribe(data => {
-      console.log(data); 
       if (data && data.maioresPontuacoes) { 
           this.jogadores = data.maioresPontuacoes.map((item: any) => ({
               nome: item.Jogador, 
@@ -101,6 +113,31 @@ export class MemoriaComponent implements OnInit, AfterViewInit, OnDestroy {
   
   }
 
+  registrarPontuacao() {
+
+    const userId = this.getUserData().user.id;
+  
+    this.placarService.registrarPlacar(this.pontuacao, this.tempo, userId, this.gameMode, 2).subscribe(
+      data => {
+        // Aqui você pode tratar a resposta do servidor
+        console.log('Pontuação registrada com sucesso:', data);
+      },
+      error => {
+        // Aqui você pode tratar erros da requisição
+        console.error('Erro ao registrar pontuação:', error);
+      }
+    );
+  }
+
+  private getUserData(): any {
+    const userData = localStorage.getItem('userData');
+    return userData ? JSON.parse(userData) : null;
+  }
+  
+
+  private calcularPontuacao() {
+    this.pontuacao = 1000 - this.tempo * 2; 
+  }
 
   ngOnDestroy() {
     if (this.subscription) {
@@ -112,6 +149,10 @@ export class MemoriaComponent implements OnInit, AfterViewInit, OnDestroy {
     if (this.intervalSubscription) {
       this.intervalSubscription.unsubscribe();
     }
+    if (this.timerSubscription) {
+      this.timerSubscription.unsubscribe();
+    }
+
     this.gameActive = false; 
 
     if (this.ReconhecimentoOcular) {
@@ -203,10 +244,12 @@ export class MemoriaComponent implements OnInit, AfterViewInit, OnDestroy {
       // Verifique se todas as cartas foram viradas
       if (this.cartas.every(carta => carta.virada)) {
         this.showVitoria = true; // Exibe a modal de vitória
+        this.calcularPontuacao();
         this.gameActive = false;  // Impede novas ações
         
         // Reinicia o jogo após 5 segundos
         setTimeout(() => {
+          this.registrarPontuacao();
           this.reiniciarJogo();
         }, 5000);
 
@@ -217,9 +260,11 @@ export class MemoriaComponent implements OnInit, AfterViewInit, OnDestroy {
 
           this.showVitoria = true; // Exibe a modal de vitória
           this.gameActive = false;  // Impede novas ações
+          this.calcularPontuacao();
   
           // Reinicia o jogo após 5 segundos
           setTimeout(() => {
+            this.registrarPontuacao();
             this.reiniciarJogo();
           }, 5000);
         }
@@ -231,6 +276,9 @@ export class MemoriaComponent implements OnInit, AfterViewInit, OnDestroy {
     this.inicializarCartas();
     this.gameActive = true;
     this.showVitoria = false;
+    this.tempo = 0; // Reseta o tempo
+    this.pontuacao = 0; // Reseta a pontuação
+    this.carregarMaioresPontuacoes();
   }
 }
 
