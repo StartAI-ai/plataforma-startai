@@ -20,7 +20,7 @@
     align-items: center; /* Centraliza o conteúdo verticalmente */
     justify-content: center; /* Centraliza o conteúdo horizontalmente */
     text-align: center; /* Alinha o texto ao centro */
-    font-size: 20px;
+    font-size: 16px;
 }
 
 .modal-content {

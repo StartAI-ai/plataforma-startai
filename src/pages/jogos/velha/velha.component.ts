@@ -5,13 +5,14 @@ import { CommonModule } from '@angular/common';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ModalNovoJogoComponent } from '../../../componentes/modal-novo-jogo/modal-novo-jogo.component';
 import { PlacarService } from '../../../service/placar.service';
+import { Jogador } from '../../../componentes/interface/Jogador';
 
 @Component({
   selector: 'app-velha',
   standalone: true,
   imports: [CommonModule, ModalNovoJogoComponent],
   templateUrl: './velha.component.html',
-  styleUrl: './velha.component.css'
+  styleUrls: ['./velha.component.css']
 })
 export class VelhaComponent implements OnInit, OnDestroy, AfterViewInit {
 
@@ -20,6 +21,7 @@ export class VelhaComponent implements OnInit, OnDestroy, AfterViewInit {
 
   private subscription: Subscription | undefined;
   private blinkSubscription: Subscription | undefined;
+  private timerSubscription: Subscription | undefined;
 
   ReconhecimentoOcular = false;
   gameActive = true; 
@@ -29,12 +31,23 @@ export class VelhaComponent implements OnInit, OnDestroy, AfterViewInit {
 
   private modalTimer: any;
 
+  tempo: number = 0; // Tempo em segundos
+  pontuacaoJogador: number = 0; // Pontuação do jogador
+
+  jogadores: Jogador[] = [];
   selectedIndex: number = 0;
   botHasPlayed: boolean = false;
   cellValues: (string | null)[] = Array(9).fill(null);
   gameMode: number = 2;
 
   listaPontuacoes: { pontuacao: number; Jogador: string }[] = [];
+  jogadas: number = 0;
+  
+  // Definições de pontuação
+  private readonly PONTUACAO_VITORIA_JOGADOR = 500; // Pontos por vitória
+  private readonly PONTUACAO_JOGADA = 50; // Pontos por jogada
+  private readonly BONUS_TEMPO = 100; // Bônus por completar rápido
+  private readonly TEMPO_MAXIMO = 30; // Tempo máximo em segundos para bônus
 
   constructor(private blinkService: BlinkService, private router: Router, private route: ActivatedRoute, private placarService: PlacarService) {}
 
@@ -49,6 +62,8 @@ export class VelhaComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   ngOnInit() {
+    this.carregarMaioresPontuacoes();
+
     this.route.params.subscribe(params => {
       this.gameMode = +params['mode'];
       if (this.gameMode === 2) {
@@ -62,23 +77,53 @@ export class VelhaComponent implements OnInit, OnDestroy, AfterViewInit {
         this.onBlinkDetected();
       }
     });
-  
+
     this.initializePlacar();
+    this.iniciarContador(); // Começar o contador de tempo
+  }
+
+  private iniciarContador() {
+    this.timerSubscription = interval(1000).subscribe(() => {
+      this.tempo++;
+    });
+  }
+
+  getImagemPorIndice(indice: number): string {
+    const imagens = [
+        '../../../assets/img/primeiro.png', 
+        '../../../assets/img/segundo.png', 
+        '../../../assets/img/terceiro.png'  
+    ];
+
+    return imagens[indice];
+  }
+
+  private carregarMaioresPontuacoes() {
+    const id_jogo = 1; 
+    const id_controle = this.gameMode; 
+
+    this.placarService.MaioresPontuacoes(id_jogo, id_controle).subscribe(data => {
+      if (data && data.maioresPontuacoes) { 
+          this.jogadores = data.maioresPontuacoes.map((item: any) => ({
+              nome: item.Jogador, 
+          }));
+      } else {
+          this.jogadores = []; 
+      }
+    });
   }
 
   private initializePlacar() {
-   this.placarService.MaioresPontuacoes(1, this.gameMode).subscribe(
-    (response: { pontuacao: number; Jogador: string }[]) => {
-      this.listaPontuacoes = Array.isArray(response) ? response : []; // Verifica se é um array
-    },
-    error => {
-      console.error('Erro ao obter maiores pontuações:', error);
-      this.listaPontuacoes = []; // Garante que a lista está vazia em caso de erro
-    }
-  );
-
+    this.placarService.MaioresPontuacoes(1, this.gameMode).subscribe(
+      (response: { pontuacao: number; Jogador: string }[]) => {
+        this.listaPontuacoes = Array.isArray(response) ? response : [];
+      },
+      error => {
+        console.error('Erro ao obter maiores pontuações:', error);
+        this.listaPontuacoes = [];
+      }
+    );
   }
-
 
   ngOnDestroy() {
     if (this.subscription) {
@@ -94,6 +139,10 @@ export class VelhaComponent implements OnInit, OnDestroy, AfterViewInit {
 
     if (this.ReconhecimentoOcular) {
       this.blinkService.stopCamera(this.videoElement.nativeElement);
+    }
+    
+    if (this.timerSubscription) {
+      this.timerSubscription.unsubscribe();
     }
   }
 
@@ -126,6 +175,7 @@ export class VelhaComponent implements OnInit, OnDestroy, AfterViewInit {
   selecionarCelula(index: number) {
     if (!this.cellValues[index] && this.gameActive) {
       this.cellValues[index] = 'X';
+      this.jogadas++; // Incrementa o contador de jogadas
       const jogadorCell = document.getElementById(`cell${index}`);
 
       if (jogadorCell) {
@@ -136,7 +186,7 @@ export class VelhaComponent implements OnInit, OnDestroy, AfterViewInit {
 
       const vencedor = this.verificarVencedor();
       if (vencedor) {
-        this.gameActive = false; // O jogo não está mais ativo
+        this.gameActive = false;
         return;
       }
 
@@ -169,7 +219,7 @@ export class VelhaComponent implements OnInit, OnDestroy, AfterViewInit {
 
       const vencedor = this.verificarVencedor();
       if (vencedor) {
-        this.gameActive = false; // O jogo não está mais ativo
+        this.gameActive = false;
         return;
       }
 
@@ -192,11 +242,18 @@ export class VelhaComponent implements OnInit, OnDestroy, AfterViewInit {
         const [a, b, c] = combinacao;
         if (this.cellValues[a] && this.cellValues[a] === this.cellValues[b] && this.cellValues[a] === this.cellValues[c]) {
             if (this.cellValues[a] === 'X') {
-                this.showVitoria = true; // Habilita a vitória para 'X'
-            } else if (this.cellValues[a] === 'O') {
-                this.showDerrota = true; // Habilita a derrota para 'O'
+                this.showVitoria = true;
+                let pontos = this.PONTUACAO_VITORIA_JOGADOR;
+
+                // Verifique se o tempo é suficiente para um bônus
+                if (this.tempo <= this.TEMPO_MAXIMO) {
+                    pontos += this.BONUS_TEMPO;
+                }
+
+                this.pontuacaoJogador += pontos - (this.jogadas * this.PONTUACAO_JOGADA);
+                this.registrarPontuacao();
             }
-            this.gameActive = false; // O jogo não está mais ativo
+            this.gameActive = false;
 
             // Reinicia o jogo após 5 segundos
             this.modalTimer = setTimeout(() => {
@@ -209,52 +266,72 @@ export class VelhaComponent implements OnInit, OnDestroy, AfterViewInit {
 
     if (!this.cellValues.includes(null)) {
       this.showEmpate = true;
-      // Reinicia o jogo após 5 segundos
-      this.modalTimer = setTimeout(() => {
-        this.reiniciarJogo();
-      }, 5000);
+      // Atualizar pontuação em caso de empate, se necessário
     }
 
     return null;
   }
 
   private reiniciarJogo() {
-    this.gameActive = false; // Desativar o jogo antes de reiniciar.
-
-    // Limpar todos os valores das células
+    this.gameActive = false; 
     this.cellValues.fill(null);
+    this.jogadas = 0; // Resetar contador de jogadas
+    this.tempo = 0; // Resetar tempo
 
     // Remover marcações e conteúdo de todas as células no DOM
     for (let index = 0; index < this.cellValues.length; index++) {
-      const cell = document.getElementById(`cell${index}`);
-      if (cell) {
-        cell.classList.remove('marcada', 'jogador', 'bot'); // Remover todas as classes
-        cell.innerHTML = ''; // Limpar o conteúdo da célula
-      }
+        const cell = document.getElementById(`cell${index}`);
+        if (cell) {
+            cell.classList.remove('marcada', 'jogador', 'bot'); // Remover todas as classes
+            cell.innerHTML = ''; // Limpar o conteúdo da célula
+        }
     }
+
+    // Desativar a seleção atual para evitar múltiplos seletores
+    const previousCell = document.getElementById(`cell${this.selectedIndex}`);
+    if (previousCell) {
+      previousCell.classList.remove('selected');
+    }
+   
 
     // Resetar estados do jogo
     this.selectedIndex = 0;
-    this.gameActive = true;
     this.showVitoria = false;
     this.showDerrota = false;
     this.showEmpate = false;
     this.botHasPlayed = false;
 
+    // Limpar modalTimer, se existir
     if (this.modalTimer) {
-      clearTimeout(this.modalTimer);
-      this.modalTimer = null;
+        clearTimeout(this.modalTimer);
+        this.modalTimer = null;
     }
 
-    this.route.params.subscribe(params => {
-      this.gameMode = +params['mode'];
-      if (this.gameMode === 2) {
-        this.iniciarSelecao();
-      }
-    });
+    // Limpar a subscription existente para evitar múltiplos intervalos
+    if (this.subscription) {
+        this.subscription.unsubscribe();
+    }
+
+    // Reiniciar a seleção após um curto intervalo
+    setTimeout(() => {
+        this.gameActive = true;
+        this.iniciarSelecao(); // Iniciar seleção apenas após limpar
+    }, 100); // Pode ajustar o tempo conforme necessário
+
+    this.initializePlacar();
   }
 
   voltar(): void {
     this.router.navigate(['/home']);
+  }
+
+  registrarPontuacao() {
+    const userId = this.getUserData().user.id;
+    this.placarService.registrarPlacar(this.pontuacaoJogador, this.tempo, userId, this.gameMode, 1).subscribe();
+  }
+
+  private getUserData(): any {
+    const userData = localStorage.getItem('userData');
+    return userData ? JSON.parse(userData) : null;
   }
 }

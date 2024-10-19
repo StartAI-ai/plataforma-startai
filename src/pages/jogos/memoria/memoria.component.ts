@@ -114,19 +114,8 @@ export class MemoriaComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   registrarPontuacao() {
-
     const userId = this.getUserData().user.id;
-  
-    this.placarService.registrarPlacar(this.pontuacao, this.tempo, userId, this.gameMode, 2).subscribe(
-      data => {
-        // Aqui você pode tratar a resposta do servidor
-        console.log('Pontuação registrada com sucesso:', data);
-      },
-      error => {
-        // Aqui você pode tratar erros da requisição
-        console.error('Erro ao registrar pontuação:', error);
-      }
-    );
+    this.placarService.registrarPlacar(this.pontuacao, this.tempo, userId, this.gameMode, 2).subscribe();
   }
 
   private getUserData(): any {

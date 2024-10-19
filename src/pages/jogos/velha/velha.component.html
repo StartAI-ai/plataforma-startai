@@ -6,7 +6,7 @@
         </button>
     </div>
 
-    <div class="d-flex" style="height: 90%;">
+    <div class="d-flex" style="height: 80%;">
         
         <div class="flex-grow-1 container-game">
             <div class="game">
@@ -59,23 +59,21 @@
                 </p>
             </div>
 
-            <div class="container-placar">
+            <div class="container-placar" >
                 <span style="font-weight: bold;">PLACAR</span>
                 <div class="divider"></div>
-                <div class="row">
-                    <div *ngFor="let pontuacao of listaPontuacoes">
-                        <!-- Exibir pontuação aqui -->
-                        <p>{{ pontuacao.Jogador }}: {{ pontuacao.pontuacao }}</p>
-                    </div>
-                      
-                    <div class="col-12" *ngFor="let jogador of listaPontuacoes; let i = index">
-                        <div class="d-flex align-items-center mb-3">
-                            <img [src]="'../../../assets/img/' + (i === 0 ? 'primeiro.png' : i === 1 ? 'segundo.png' : 'terceiro.png')" alt="Imagem {{ i + 1 }}" class="me-2">
-                            <span>{{ jogador.Jogador }} - {{ jogador.pontuacao }}</span>
-                        </div>
+                <div *ngIf="jogadores.length > 0">
+                  <div class="col-12" *ngFor="let jogador of jogadores; let i = index">
+                    <div class="d-flex align-items-center mb-3">
+                        <img [src]="getImagemPorIndice(i)" alt="Imagem do jogador" class="fixed-image me-2">
+                        <span>{{jogador.nome}}</span>
                     </div>
                 </div>
-            </div>
+                </div>
+                <div *ngIf="jogadores.length === 0">
+                  <span>Nenhum jogador disponível.</span>
+                </div>
+             </div>
             
             
         </div>
