@@ -4,27 +4,29 @@
             <h1>CONFIGURAÇÕES</h1>
         </div>
         <div class="itens_menu">
-            <a href="/src/pages/perfil/dados/dados.component.html">DADOS PESSOAIS</a>
-            <a href="/src/pages/perfil/email/email.component.html">EMAIL</a>
-            <a href="/src/pages/perfil/senha/senha.component.html"class="selected">SENHA</a>
+            <a href="/perfil/dados"  (click)="dadosPessoais()">DADOS PESSOAIS</a>
+            <a href="/perfil/senha" class="selected" (click)="senha()">SENHA</a>
         </div>
     </div>
     <div class="dados_pessoais">
-        <div class="nome">
-            <label for="email">NOME</label>
-            <input type="name" id="name" class="nome-formulario" formControlName="name" placeholder="Nome" required>
-        </div>
-        <div class="nome">
-            <label for="email">TIPO DE CONTROLE</label>
-            <div>
-                <select class="form-select controle-formulario" formControlName="controle">
-                    <option value="" disabled selected>Controles</option>
-                    <option value="2">Controle Ocular</option>
-                    <option value="3">Teclado</option>
-                </select>
-        </div>
+        <form [formGroup]="redefinirForm" (ngSubmit)="onSubmit()">
+            <div class="form-group">
+              <label for="email">EMAIL</label>
+              <input type="email" id="email" class="controle-formulario" formControlName="email" placeholder="Email" required>
+            </div>
             
-        </div>
+            <div class="form-group">
+              <label for="dataNascimento">DATA DE NASCIMENTO</label>
+              <input type="date" id="dataNascimento" class="controle-formulario" formControlName="dataNascimento" required>
+            </div>
+  
+            <div class="form-group">
+              <label for="senha">NOVA SENHA</label>
+              <input type="password" id="senha" class="controle-formulario" formControlName="senha" placeholder="Senha" required>
+            </div>
+  
+            <button type="submit" class="btn btn-primary btn-login" [disabled]="redefinirForm.invalid">REDEFINIR</button>
+          </form>
 
 
     </div>

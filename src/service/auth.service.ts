@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Router } from '@angular/router';
-import { BehaviorSubject, finalize, Observable } from 'rxjs';
+import { BehaviorSubject, finalize, Observable, catchError } from 'rxjs';
+import { throwError } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -19,7 +20,10 @@ export class AuthService {
     return this.http.post(this.obterUrl('/registrar'), 
       { nome, email, senha, dataNascimento, controle }, 
       this.obterOpcoesHttp()
-    ).pipe(finalize(() => this.loadingSubject.next(false)));
+    ).pipe(
+      finalize(() => this.loadingSubject.next(false)),
+      catchError(this.tratarErro)
+    );
   }
 
   // Função de login
@@ -28,7 +32,23 @@ export class AuthService {
     return this.http.post(this.obterUrl('/login'), 
       { email, senha }, 
       this.obterOpcoesHttp()
-    ).pipe(finalize(() => this.loadingSubject.next(false)));
+    ).pipe(
+      finalize(() => this.loadingSubject.next(false)),
+      catchError(this.tratarErro)
+    );
+  }
+
+  // Função para deletar usuário
+  deletar(id: number): Observable<any> {
+    this.loadingSubject.next(true);
+    const url = `/deletar-usuario/${id}`;
+
+    return this.http.delete(this.obterUrl(url), 
+      this.obterOpcoesHttp()
+    ).pipe(
+      finalize(() => this.loadingSubject.next(false)),
+      catchError(this.tratarErro)
+    );
   }
 
   // Função para redefinir senha
@@ -37,15 +57,21 @@ export class AuthService {
     return this.http.post(this.obterUrl('/redefinir-senha'), 
       { email, senha, dataNascimento }, 
       this.obterOpcoesHttp()
-    ).pipe(finalize(() => this.loadingSubject.next(false)));
+    ).pipe(
+      finalize(() => this.loadingSubject.next(false)),
+      catchError(this.tratarErro)
+    );
   }
 
   // Verifica se o usuário está autenticado
   isAuthenticated(): boolean {
-    if (typeof window !== 'undefined' && localStorage) {
-      return !!localStorage.getItem('userData'); // Ajuste conforme seu caso
-    }
-    return false; // Para SSR
+    return !!localStorage.getItem('userData'); // Ajuste conforme seu caso
+  }
+
+  // Logout do usuário
+  logout(): void {
+    localStorage.removeItem('userData'); // Remove os dados do usuário
+    this.router.navigate(['/login']); // Ajuste a rota conforme sua aplicação
   }
 
   // Métodos auxiliares
@@ -59,5 +85,11 @@ export class AuthService {
       'Access-Control-Allow-Origin': '*',
     });
     return { headers };
+  }
+
+  // Tratamento de erros
+  private tratarErro(error: any) {
+    console.error('Erro na requisição:', error);
+    return throwError(() => new Error('Ocorreu um erro. Tente novamente.'));
   }
 }

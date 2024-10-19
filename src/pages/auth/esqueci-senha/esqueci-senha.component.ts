@@ -39,7 +39,6 @@ export class EsqueciSenhaComponent {
     this.authService.redefinirSenha(email, senha, dataNascimento).subscribe({
       next: () => {
         alert('Senha redefinida com sucesso! Você será redirecionado para a tela de login');
-        this.router.navigate(['/login']);
       },
       error: (error) => {
         const mensagemErro = error.error?.error || 'Erro ao redefinir a senha. Tente novamente.';

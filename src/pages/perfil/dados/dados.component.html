@@ -4,25 +4,34 @@
             <h1>CONFIGURAÇÕES</h1>
         </div>
         <div class="itens_menu">
-            <a href="/src/pages/perfil/dados/dados.component.html" class="selected">DADOS PESSOAIS</a>
-            <a href="/src/pages/perfil/email/email.component.html">EMAIL</a>
-            <a href="/src/pages/perfil/senha/senha.component.html">SENHA</a>
+            <a href="/perfil/dados" class="selected" (click)="dadosPessoais()">DADOS PESSOAIS</a>
+            <a href="/perfil/senha" (click)="senha()">SENHA</a>
         </div>
     </div>
-    <div class="dados_pessoais">
-        <div class="nome">
-            <label for="email">NOME</label>
-            <input type="name" id="name" class="nome-formulario" formControlName="name" placeholder="Nome" required>
-        </div>
-        <div class="nome">
-            <label for="email">TIPO DE CONTROLE</label>
-            <div>
-                <select class="form-select controle-formulario" formControlName="controle">
-                    <option value="" disabled selected>Controles</option>
-                    <option value="2">Controle Ocular</option>
-                    <option value="3">Teclado</option>
+    <form [formGroup]="dadosForm" (ngSubmit)="onSubmit()">
+        <div class="dados_pessoais">
+            <div class="campo">
+                <label for="nome">NOME</label>
+                <input type="text" id="nome" class="nome-formulario" formControlName="nome" placeholder="Nome" required>
+            </div>
+            <div class="campo">
+                <label for="dataNascimento">DATA DE NASCIMENTO</label>
+                <input type="date" id="dataNascimento" class="nome-formulario" formControlName="dataNascimento" placeholder="Data de Nascimento" required>
+            </div>
+            <div class="campo">
+                <label for="email">EMAIL</label>
+                <input type="email" id="email" class="nome-formulario" formControlName="email" placeholder="Email" required>
+            </div>
+            <div class="campo">
+                <label for="controle">TIPO DE CONTROLE</label>
+                <select class="nome-formulario" formControlName="controle" required>
+                    <option value="" disabled selected>Selecione o tipo de controle</option>
+                    <option value=1>Perguntar Sempre</option>
+                    <option value=2>Controle Ocular</option>
+                    <option value=3>Teclado</option>
                 </select>
-            </div>      
+            </div>
+            <button type="submit" class="btn-submit">Atualizar</button> <!-- Botão para enviar o formulário -->
         </div>
-    </div>
+    </form>
 </div>

@@ -7,7 +7,6 @@ import { HomeComponent } from '../pages/home/home.component';
 import { MemoriaComponent } from '../pages/jogos/memoria/memoria.component';
 import { VelhaComponent } from '../pages/jogos/velha/velha.component';
 import { DadosComponent } from '../pages/perfil/dados/dados.component';
-import { EmailComponent } from '../pages/perfil/email/email.component';
 import { SenhaComponent } from '../pages/perfil/senha/senha.component';
 import { ControleComponent } from '../pages/controle/controle.component';
 import { RedirectGuard } from '../auth/RedirectGuard.guard';
@@ -22,8 +21,6 @@ export const routes: Routes = [
   {path: 'jogo-memoria/:mode', component: MemoriaComponent, canActivate: [AuthGuard]},
   {path: 'jogo-velha/:mode', component: VelhaComponent, canActivate: [AuthGuard]},
   {path: 'perfil/dados', component: DadosComponent, canActivate: [AuthGuard],},
-  {path: 'perfil/email', component: EmailComponent, canActivate: [AuthGuard],},
-  {path: 'perfil/senha', component: SenhaComponent, canActivate: [AuthGuard],},
   {path: 'perfil/senha', component: SenhaComponent, canActivate: [AuthGuard],},
   {path: 'controle/:jogo', component: ControleComponent, canActivate: [AuthGuard]},
 
