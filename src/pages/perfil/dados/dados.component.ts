@@ -52,11 +52,15 @@ export class DadosComponent implements OnInit {
 
   onSubmit(): void {
     const userId = this.getUserData()?.user?.id;
-
+  
     if (this.dadosForm.valid && userId) {
       this.perfilService.atualizarDados(userId, this.dadosForm.value).subscribe(
         response => {
           console.log('Dados atualizados com sucesso', response);
+          if (response.user) {
+            localStorage.setItem('userData', JSON.stringify(response));
+            this.router.navigate(['/home']); 
+          } 
           alert('Dados atualizados com sucesso!'); 
         },
         error => {
