@@ -1,22 +1,25 @@
 import { Component, ElementRef, ViewChild, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ModalNovoJogoComponent } from '../../../componentes/modal-novo-jogo/modal-novo-jogo.component';
+import { BlinkService } from '../../../service/blink.service';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-pescaria',
   standalone: true,
-  imports: [CommonModule, ModalNovoJogoComponent], 
-  template: `
-    <div>
-      <div #barraAzul class="barra"></div>
-      <app-modal-novo-jogo *ngIf="showDerrota" [title]="'Lamento!! Você perdeu!'" (jogarNovamente)="jogarNovamente()"></app-modal-novo-jogo>
-      <app-modal-novo-jogo *ngIf="showVitoria" [title]="'Parabéns! Você venceu!'" (jogarNovamente)="jogarNovamente()"></app-modal-novo-jogo>
-    </div>
-  `,
-  styleUrls: ['./pescaria.component.css']
+  imports: [CommonModule, ModalNovoJogoComponent],
+  templateUrl: './pescaria.component.html',
+  styleUrl: './pescaria.component.css'
 })
+
 export class PescariaComponent implements OnInit {
+
+  constructor(private blinkService: BlinkService, private router: Router, private route: ActivatedRoute) {}
+
+  
   @ViewChild('barraAzul') barraAzul!: ElementRef;
+
+  ReconhecimentoOcular = false;
 
   // Lógica do jogo
   velocidadeDeMovimento: number = 2;
@@ -47,6 +50,10 @@ export class PescariaComponent implements OnInit {
     this.intervaloMovimento = setInterval(() => {
       this.movimentarBarraAzul();
     }, 16); // Aproximadamente 60 FPS
+  }
+
+  voltar(): void {
+    this.router.navigate(['/home']);
   }
 
   movimentarBarraAzul() {
