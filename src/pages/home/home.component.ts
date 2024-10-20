@@ -35,4 +35,13 @@ export class HomeComponent {
       this.router.navigate(route);
     }
   }
+
+  pescaria(): void {
+    if (this.userData) {
+      const route = this.userData.controleId === 1 ? 
+        ['controle', 'jogo-pescaria'] : 
+        ['jogo-pescaria', this.userData.controleId];
+      this.router.navigate(route);
+    }
+  }
 }
