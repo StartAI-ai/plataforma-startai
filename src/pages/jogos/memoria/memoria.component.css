@@ -1,7 +1,28 @@
+.container-fluid {
+  display: flex;
+  flex-direction: column;
+  height: 100%; 
+}
+
+.d-flex {
+  display: flex;
+}
+
+.container-game {
+  flex: 1; 
+  display: flex;
+  justify-content: center; 
+}
+
 .game-container {
   display: grid;
-  grid-template-columns: repeat(5, 1fr); /* 5 colunas */
+  grid-template-columns: repeat(5, 1fr);
   gap: 10px;
+  align-items: center; 
+}
+
+.container-camera, .container-descricao, .container-placar {
+  margin-bottom: 20px; 
 }
 
 .carta {
@@ -12,23 +33,23 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  aspect-ratio: 1; /* Mantém a proporção quadrada */
-  transition: transform 0.2s; /* Transição suave para efeito de seleção */
+  aspect-ratio: 1; 
+  transition: transform 0.2s;
 }
 
 .carta.selected {
-  border: 5px solid yellow; /* Borda amarela para carta selecionada */
-  background-color: #0f4adf !important; /* Cor de fundo para carta selecionada */
+  border: 5px solid yellow;
+  background-color: #0f4adf !important;
 }
 
 .carta img {
-  max-height: 80%; /* Para evitar que a imagem exceda o tamanho da carta */
+  max-height: 80%;
   max-width: 80%;
 }
 
 .card-back {
   width: 100%;
   height: 100%;
-  background-color: #ccc; /* Cor do verso da carta */
-  border: 1px solid #3053aa; /* Bordas do verso da carta */
+  background-color: #ccc;
+  border: 1px solid #3053aa;
 }

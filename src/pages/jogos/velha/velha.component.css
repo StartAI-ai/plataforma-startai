@@ -23,3 +23,30 @@
     background-color: lightblue;
   }
   
+
+  .container-fluid {
+  display: flex;
+  flex-direction: column;
+  height: 100%; 
+}
+
+.d-flex {
+  display: flex;
+}
+
+.container-game {
+  flex: 1; 
+  display: flex;
+  justify-content: center; 
+}
+
+.game-container {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 10px;
+  align-items: center; 
+}
+
+.container-camera, .container-descricao, .container-placar {
+  margin-bottom: 20px; 
+}

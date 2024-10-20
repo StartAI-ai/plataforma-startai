@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../../../service/auth.service';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ReactiveFormsModule } from '@angular/forms'; 
@@ -10,14 +10,22 @@ import { UtilService } from '../../../service/util.service';
   standalone: true,
   imports: [ReactiveFormsModule],
   templateUrl: './cadastro.component.html',
-  styleUrl: './cadastro.component.css'
+  styleUrls: ['./cadastro.component.css']
 })
-export class CadastroComponent {
+export class CadastroComponent implements OnInit {
   cadastroForm!: FormGroup;
 
-  constructor(private authService: AuthService, private router: Router, private utilService: UtilService) {}
+  constructor(
+    private authService: AuthService, 
+    private router: Router, 
+    private utilService: UtilService
+  ) {}
 
   ngOnInit(): void {
+    this.initializeForm();
+  }
+
+  private initializeForm(): void {
     this.cadastroForm = new FormGroup({
       nome: new FormControl('', [Validators.required]),
       email: new FormControl('', [Validators.required, Validators.email]),
@@ -29,20 +37,32 @@ export class CadastroComponent {
 
   onSubmit(): void {
     if (this.cadastroForm.valid) {
-      const { nome, email, senha, dataNascimento, controle } = this.cadastroForm.value;
-
-      this.authService.cadastro(nome, email, senha, dataNascimento, controle).subscribe({
-        next: (response) => {
-          this.router.navigate(['']); 
-        },
-        error: (error) => {
-          this.utilService.showSnackbar('Erro ao cadastrar usuário. Tente novamente.');
-        }
-      });
+      this.cadastrarUsuario();
     } else {
-      this.utilService.showSnackbar('Formulário inválido. Verifique os campos.');
+      alert('Formulário inválido. Verifique os campos.');
     }
   }
 
+  private cadastrarUsuario(): void {
+    const { nome, email, senha, dataNascimento, controle } = this.cadastroForm.value;
 
+    this.authService.cadastro(nome, email, senha, dataNascimento, controle).subscribe({
+      next: (response) => {
+        alert('Usuário cadastrado com sucesso!');
+        this.router.navigate(['/login']); 
+      },
+      error: (error) => {
+        const mensagemErro = error.error?.error || 'Erro ao cadastrar usuário. Tente novamente.';
+        alert(mensagemErro);
+      }
+    });
+  }
+
+  login(): void {
+    this.router.navigate(['/login']);
+  }
+
+  redefinirSenha(): void {
+    this.router.navigate(['/redefinirSenha']);
+  }
 }
