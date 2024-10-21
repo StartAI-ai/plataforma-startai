@@ -40,7 +40,7 @@ export class MemoriaComponent implements OnInit, AfterViewInit, OnDestroy {
   private estaVerificando: boolean = false;
   private timerSubscription: Subscription | undefined;
 
-  gameMode: number = 2;
+  gameMode: number = 0;
   gameActive = true;
 
   tempo: number = 0; // Tempo em segundos
@@ -49,14 +49,14 @@ export class MemoriaComponent implements OnInit, AfterViewInit, OnDestroy {
 
   jogadores: Jogador[] = [];
 
-  constructor(private blinkService: BlinkService, private router: Router, private route: ActivatedRoute, private placarService: PlacarService) {}
+  constructor(private blinkService: BlinkService, private router: Router, private route: ActivatedRoute, private placarService: PlacarService) {
+  }
 
   ngOnInit() {
     this.carregarMaioresPontuacoes();
 
     this.route.params.subscribe((params) => {
-      this.gameMode = +params['mode'];
-      if (this.gameMode === 2) {
+      if (+params['mode'] === 2) {
         this.ReconhecimentoOcular = true;
         this.iniciarAutoSelecao();
       }
@@ -98,18 +98,23 @@ export class MemoriaComponent implements OnInit, AfterViewInit, OnDestroy {
 
   private carregarMaioresPontuacoes() {
     const id_jogo = 2; 
-    const id_controle = this.gameMode; 
+    this.gameMode = 0;
 
-    this.placarService.MaioresPontuacoes(id_jogo, id_controle).subscribe(data => {
-      if (data && data.maioresPontuacoes) { 
-          this.jogadores = data.maioresPontuacoes.map((item: any) => ({
-              nome: item.Jogador, 
-          }));
-      } else {
-          this.jogadores = []; 
-      }
-  
+    this.route.params.subscribe((params) => {
+      this.gameMode = +params['mode']
+      this.placarService.MaioresPontuacoes(id_jogo, this.gameMode).subscribe(data => {
+        if (data && data.maioresPontuacoes) { 
+            this.jogadores = data.maioresPontuacoes.map((item: any) => ({
+                nome: item.Jogador, 
+            }));
+        } else {
+            this.jogadores = []; 
+        }
+    
+      });
     });
+
+   
   
   }
 
