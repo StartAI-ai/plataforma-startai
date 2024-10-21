@@ -8,26 +8,28 @@
             <a href="/perfil/senha" class="selected" (click)="senha()">SENHA</a>
         </div>
     </div>
-    <div class="dados_pessoais">
+
+
         <form [formGroup]="redefinirForm" (ngSubmit)="onSubmit()">
-            <div class="form-group">
-              <label for="email">EMAIL</label>
-              <input type="email" id="email" class="controle-formulario" formControlName="email" placeholder="Email" required>
-            </div>
-            
-            <div class="form-group">
-              <label for="dataNascimento">DATA DE NASCIMENTO</label>
-              <input type="date" id="dataNascimento" class="controle-formulario" formControlName="dataNascimento" required>
-            </div>
-  
-            <div class="form-group">
-              <label for="senha">NOVA SENHA</label>
-              <input type="password" id="senha" class="controle-formulario" formControlName="senha" placeholder="Senha" required>
-            </div>
-  
-            <button type="submit" class="btn btn-primary btn-login" [disabled]="redefinirForm.invalid">REDEFINIR</button>
-          </form>
+              <div class="dados_pessoais">
+              <div class="form-group">
+                <label for="email">EMAIL</label>
+                <input type="email" id="email" class="controle-formulario" formControlName="email" placeholder="Email" required>
+              </div>
+              
+              <div class="form-group">
+                <label for="dataNascimento">DATA DE NASCIMENTO</label>
+                <input type="date" id="dataNascimento" class="controle-formulario" formControlName="dataNascimento" required>
+              </div>
+    
+              <div class="form-group">
+                <label for="senha">NOVA SENHA</label>
+                <input type="password" id="senha" class="controle-formulario" formControlName="senha" placeholder="Senha" required>
+              </div>
+    
+              <button type="submit" class="button btn btn-primary btn-login" [disabled]="redefinirForm.invalid">Redefinir</button>
+              </div>
+        </form>
 
 
-    </div>
 </div>

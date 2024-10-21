@@ -8,21 +8,22 @@
             <a href="/perfil/senha" (click)="senha()">SENHA</a>
         </div>
     </div>
+
     <form [formGroup]="dadosForm" (ngSubmit)="onSubmit()">
         <div class="dados_pessoais">
-            <div class="campo">
+            <div class="campo1">
                 <label for="nome">NOME</label>
                 <input type="text" id="nome" class="nome-formulario" formControlName="nome" placeholder="Nome" required>
             </div>
-            <div class="campo">
+            <div class="campo2">
                 <label for="dataNascimento">DATA DE NASCIMENTO</label>
                 <input type="date" id="dataNascimento" class="nome-formulario" formControlName="dataNascimento" placeholder="Data de Nascimento" required>
             </div>
-            <div class="campo">
+            <div class="campo3">
                 <label for="email">EMAIL</label>
                 <input type="email" id="email" class="nome-formulario" formControlName="email" placeholder="Email" required>
             </div>
-            <div class="campo">
+            <div class="campo4">
                 <label for="controle">TIPO DE CONTROLE</label>
                 <select class="nome-formulario" formControlName="controle" required>
                     <option value="" disabled selected>Selecione o tipo de controle</option>
@@ -31,7 +32,8 @@
                     <option value=3>Teclado</option>
                 </select>
             </div>
-            <button type="submit" class="btn-submit">Atualizar</button> <!-- Botão para enviar o formulário -->
+            <button type="submit" class="button btn btn-primary ">Atualizar</button> <!-- Botão para enviar o formulário -->
         </div>
     </form>
+    
 </div>

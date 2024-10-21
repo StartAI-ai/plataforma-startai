@@ -13,15 +13,15 @@
 
 .container{
     display: flex;
-    width: 96%;
+    width: 100%;
     padding: 2%;
     justify-content: space-between;
 }
 .menu{
-    width: 25%;
+    width: 50%;
     background-color: white;
     padding: 2%;
-    padding-right: 10%;
+    padding-right: 15%;
     border-radius: 20px;
     display: flex;
     flex-direction: column;
@@ -37,7 +37,7 @@
     flex-direction: column;
     justify-content: space-between;
     white-space: nowrap;
-     margin-right: 50%;
+    margin-right: 50%;
 }
 
 label{
@@ -82,10 +82,31 @@ label{
     width: 100%;
     background-color: white;
     padding: 2%;
-    padding-right: 55%;
+    padding-right: 110%;
     padding-bottom: 40%;
     border-radius: 20px;
     display: flex;
     justify-content: space-between;
+}
+
+.button{
+    margin-left: 15px;
+    background-color: #3053aa;
+    color: white;
+    font-weight: bold;
+    border-radius: 10%;
+    padding: 10px;
+}
+.button:hover{
+    background-color: #466ed3;
+    color: #ffffff;
+    font-weight: bold;
+    border-radius: 10%;
+
+}
+
+label, input{
+    margin-right: 100px;
+
 }
 

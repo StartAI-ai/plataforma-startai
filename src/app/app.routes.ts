@@ -14,14 +14,14 @@ import { EsqueciSenhaComponent } from '../pages/auth/esqueci-senha/esqueci-senha
 
 export const routes: Routes = [
   {path: '', component: LoginComponent, canActivate: [RedirectGuard] },
-  {path: 'login', component: LoginComponent, canActivate: [UnAuthGuard] },
-  {path: 'cadastro', component: CadastroComponent, canActivate: [UnAuthGuard] },
+  {path: 'login', component: LoginComponent,},
+  {path: 'cadastro', component: CadastroComponent, },
   {path: 'redefinirSenha', component: EsqueciSenhaComponent, canActivate: [UnAuthGuard] },
   {path: 'home', component: HomeComponent, canActivate: [AuthGuard] },
   {path: 'jogo-memoria/:mode', component: MemoriaComponent, canActivate: [AuthGuard]},
   {path: 'jogo-velha/:mode', component: VelhaComponent, canActivate: [AuthGuard]},
-  {path: 'perfil/dados', component: DadosComponent, canActivate: [AuthGuard],},
-  {path: 'perfil/senha', component: SenhaComponent, canActivate: [AuthGuard],},
+  {path: 'perfil/dados', component: DadosComponent, },
+  {path: 'perfil/senha', component: SenhaComponent, },
   {path: 'controle/:jogo', component: ControleComponent, canActivate: [AuthGuard]},
 
 ];
