@@ -1,101 +1,74 @@
 import { Component, ElementRef, ViewChild, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ModalNovoJogoComponent } from '../../../componentes/modal-novo-jogo/modal-novo-jogo.component';
-import { BlinkService } from '../../../service/blink.service';
-import { ActivatedRoute, Router } from '@angular/router';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-pescaria',
   standalone: true,
   imports: [CommonModule, ModalNovoJogoComponent],
   templateUrl: './pescaria.component.html',
-  styleUrl: './pescaria.component.css'
+  styleUrls: ['./pescaria.component.css'],
 })
-
 export class PescariaComponent implements OnInit {
-
-  constructor(private blinkService: BlinkService, private router: Router, private route: ActivatedRoute) {}
-
-  
   @ViewChild('barraAzul') barraAzul!: ElementRef;
-
-  ReconhecimentoOcular = false;
-
-  // Lógica do jogo
-  velocidadeDeMovimento: number = 2;
-  pontosDoCaminho: { x: number, y: number }[] = [
-    { x: 0, y: 0 },
-    { x: 100, y: 0 },
-    { x: 100, y: 100 },
-    { x: 0, y: 100 }
-  ];
-  pontoAtual: number = 0;
-  intervaloMovimento: any;
+  peixes: { x: number; y: number; imagem: string }[] = [];
   showVitoria: boolean = false;
   showDerrota: boolean = false;
+  posicaoBarraX: number = 200; // Posição inicial da barra
+  pontos: number = 0;
+
+  constructor(private router: Router) {}
 
   ngOnInit(): void {
+    this.criarPeixes();
     this.posicionarBarraInicial();
-    this.iniciarMovimento();
   }
 
-  // Posiciona a barra azul no primeiro ponto
+  criarPeixes() {
+    for (let i = 0; i < 3; i++) {
+      this.peixes.push({
+        x: Math.random() * 400, // Largura da tela
+        y: Math.random() * 300, // Altura da tela
+        imagem: `../../../assets/img/pescaria/peixe${i + 1}.png`, // Caminho da imagem do peixe
+      });
+    }
+  }
+
   posicionarBarraInicial() {
-    const pontoInicial = this.pontosDoCaminho[this.pontoAtual];
-    this.barraAzul.nativeElement.style.left = `${pontoInicial.x}px`;
-    this.barraAzul.nativeElement.style.top = `${pontoInicial.y}px`;
+    this.barraAzul.nativeElement.style.left = `${this.posicaoBarraX}px`;
+    this.barraAzul.nativeElement.style.bottom = '0px';
   }
 
-  iniciarMovimento() {
-    this.intervaloMovimento = setInterval(() => {
-      this.movimentarBarraAzul();
-    }, 16); // Aproximadamente 60 FPS
+  moverBarra(event: KeyboardEvent) {
+    if (event.key === 'ArrowLeft') {
+      this.posicaoBarraX = Math.max(0, this.posicaoBarraX - 10);
+    } else if (event.key === 'ArrowRight') {
+      this.posicaoBarraX = Math.min(400, this.posicaoBarraX + 10);
+    }
+    this.posicionarBarraInicial();
   }
 
-  voltar(): void {
-    this.router.navigate(['/home']);
-  }
+  pescar(peixe: any) {
+    const barraRect = this.barraAzul.nativeElement.getBoundingClientRect();
+    const peixeRect = { left: peixe.x, right: peixe.x + 30, top: peixe.y, bottom: peixe.y + 20 };
 
-  movimentarBarraAzul() {
-    const barraElem = this.barraAzul.nativeElement;
-    const pontoAlvo = this.pontosDoCaminho[this.pontoAtual];
+    if (
+      barraRect.left < peixeRect.right &&
+      barraRect.right > peixeRect.left &&
+      barraRect.top < peixeRect.bottom &&
+      barraRect.bottom > peixeRect.top
+    ) {
+      this.pontos += 10;
+      this.peixes = this.peixes.filter((p) => p !== peixe);
 
-    const posX = parseFloat(barraElem.style.left);
-    const posY = parseFloat(barraElem.style.top);
-
-    // Move a barra na direção do próximo ponto
-    const novaPosicaoX = this.mover(posX, pontoAlvo.x);
-    const novaPosicaoY = this.mover(posY, pontoAlvo.y);
-
-    barraElem.style.left = `${novaPosicaoX}px`;
-    barraElem.style.top = `${novaPosicaoY}px`;
-
-    // Verifica se chegou ao ponto de destino
-    if (novaPosicaoX === pontoAlvo.x && novaPosicaoY === pontoAlvo.y) {
-      this.pontoAtual += 1;
-      // Se a barra atingiu o último ponto, volta para o primeiro
-      if (this.pontoAtual >= this.pontosDoCaminho.length) {
-        this.pontoAtual = 0;
+      if (this.pontos >= 30) {
+        this.showVitoria = true;
       }
     }
   }
 
-  mover(posicaoAtual: number, pontoDestino: number): number {
-    if (posicaoAtual < pontoDestino) {
-      return Math.min(posicaoAtual + this.velocidadeDeMovimento, pontoDestino);
-    } else if (posicaoAtual > pontoDestino) {
-      return Math.max(posicaoAtual - this.velocidadeDeMovimento, pontoDestino);
-    } else {
-      return posicaoAtual;
-    }
-  }
-
-  jogarNovamente() {
-    // Lógica para reiniciar o jogo
-    this.showVitoria = false;
-    this.showDerrota = false;
-    this.pontoAtual = 0;
-    this.posicionarBarraInicial();
-    this.iniciarMovimento();
+  voltar(): void {
+    this.router.navigate(['/home']);
   }
 }

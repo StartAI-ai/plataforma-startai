@@ -1,26 +1,31 @@
-.game-container {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-direction: column;
-}
-
-.game-area {
-  width: 400px;
-  height: 400px;
+.container-game {
   position: relative;
+  overflow: hidden;
+  height: 650px; /* Ajuste conforme necessário */
+  width: 100%; /* Certifique-se de que o contêiner ocupe 100% da largura */
+  border-radius: 10%;
 }
 
-.barra-container {
+.game {
   position: relative;
-  width: 100%;
-  height: 100%;
-  border: 2px solid #000;
+  height: 100%; /* Para garantir que a área do jogo use toda a altura do contêiner */
 }
 
-.barra {
+.peixe-container {
   position: absolute;
-  width: 20px;
-  height: 20px;
-  background-color: blue;
+  cursor: pointer; /* Mostra que o peixe é clicável */
+}
+
+.peixe {
+  width: 50px; /* Ajuste conforme necessário */
+  height: auto; /* Mantém a proporção da imagem */
+}
+
+.barra-azul {
+  position: absolute;
+  width: 60px; /* Ajuste conforme necessário */
+  height: 20px; /* Ajuste conforme necessário */
+  background-color: blue; /* Cor da barra de pesca */
+  bottom: 0;
+  transition: left 0.1s; /* Suaviza a movimentação da barra */
 }

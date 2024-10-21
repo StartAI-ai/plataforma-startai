@@ -1,35 +1,25 @@
 <div class="container">
-  <!-- Área principal que inclui o jogo e informações -->
   <div class="main-content">
-    <div class="game-area">
-      <!-- A tela do jogo será renderizada aqui -->
-      <canvas #gameCanvas></canvas>
-
-      <!-- Adicionando a barra de pesca diretamente no componente -->
-      <div #barraAzul class="barra-azul" style="position: absolute; width: 10px; height: 100px; background-color: blue;"></div>
-    </div>
-
     <div class="info-area">
-      <div class="container-fluid d-flex flex-column" style="height: 100% !important;">
+      <div class="container-fluid d-flex flex-column" style="height: 100%;">
         <div class="d-flex align-items-center" style="height: 10%;">
-          <button class="btn btn-light" style="display: flex; align-items: center; margin-left: 40px;" (click)="voltar()">
+          <button class="btn btn-light" (click)="voltar()">
             <img src="../../../assets/img/voltar.png" alt="Voltar" style="width: 16px; height: 16px; margin-right: 5px;" /> VOLTAR
           </button>
         </div>
 
         <div class="d-flex" style="height: 90%;">
-          <div class="flex-grow-1 container-game">
+          <div class="flex-grow-1 container-game" tabindex="0" (keydown)="moverBarra($event)">
             <div class="game">
-              <!-- Aqui é onde o jogo de pescaria acontece -->
+              <div class="barra-azul" #barraAzul></div>
+              <div *ngFor="let peixe of peixes" (click)="pescar(peixe)" class="peixe-container"
+                   [ngStyle]="{'left.px': peixe.x, 'top.px': peixe.y}">
+                <img [src]="peixe.imagem" alt="Peixe" class="peixe" />
+              </div>
             </div>
           </div>
 
           <div class="bg-lightcoral d-flex flex-column" style="flex-basis: 30%; height: 100%;">
-            <div class="container-camera" *ngIf="ReconhecimentoOcular">
-              <video #videoElement autoplay style="display: none;"></video>
-              <canvas #canvasElement></canvas>
-            </div>
-
             <div class="container-descricao">
               <span style="font-weight: bold;">PESCARIA</span>
               <div class="divider"></div>
@@ -44,25 +34,11 @@
               <div class="row">
                 <div class="col-12">
                   <div class="d-flex align-items-center mb-3">
-                    <img src="../../../assets/img/primeiro.png" alt="Imagem 1" class="me-2">
-                    <span>JOGADOR 01</span>
-                  </div>
-                </div>
-                <div class="col-12">
-                  <div class="d-flex align-items-center mb-3">
-                    <img src="../../../assets/img/segundo.png" alt="Imagem 2" class="me-2">
-                    <span>JOGADOR 02</span>
-                  </div>
-                </div>
-                <div class="col-12">
-                  <div class="d-flex align-items-center mb-3">
-                    <img src="../../../assets/img/terceiro.png" alt="Imagem 3" class="me-2">
-                    <span>JOGADOR 03</span>
+                    <span>Pontos: {{ pontos }}</span>
                   </div>
                 </div>
               </div>
             </div>
-
           </div>
         </div>
       </div>
