@@ -20,8 +20,8 @@ export const routes: Routes = [
   {path: 'home', component: HomeComponent, canActivate: [AuthGuard] },
   {path: 'jogo-memoria/:mode', component: MemoriaComponent, canActivate: [AuthGuard]},
   {path: 'jogo-velha/:mode', component: VelhaComponent, canActivate: [AuthGuard]},
-  {path: 'perfil/dados', component: DadosComponent, },
-  {path: 'perfil/senha', component: SenhaComponent, },
+  {path: 'perfil/dados', component: DadosComponent, canActivate: [AuthGuard]},
+  {path: 'perfil/senha', component: SenhaComponent, canActivate: [AuthGuard]},
   {path: 'controle/:jogo', component: ControleComponent, canActivate: [AuthGuard]},
 
 ];
