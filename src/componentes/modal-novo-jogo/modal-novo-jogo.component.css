@@ -32,4 +32,6 @@
     width: 100%; /* Preencher toda a largura do modal */
     height: 100%; /* Preencher toda a altura do modal */
     padding: 100px; 
+    border: 2px solid blue; /* Borda azul */
+    border-radius: 15px; /* Bordas arredondadas */
 }
