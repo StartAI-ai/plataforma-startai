@@ -4,11 +4,12 @@ import { NavbarComponent } from '../componentes/navbar/navbar.component';
 import { CommonModule, isPlatformBrowser } from '@angular/common';
 import { AuthService } from '../service/auth.service';
 import { LoadingComponent } from '../componentes/loading/loading.component';
+import { MemoriaComponent } from "../pages/jogos/memoria/memoria.component";
 
 @Component({
   selector: 'app-template',
   standalone: true,
-  imports: [RouterOutlet, NavbarComponent, CommonModule,LoadingComponent],
+  imports: [RouterOutlet, NavbarComponent, CommonModule, LoadingComponent, MemoriaComponent],
   templateUrl: './template.component.html',
   styleUrl: './template.component.css'
 })

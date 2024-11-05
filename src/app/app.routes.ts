@@ -11,6 +11,8 @@ import { SenhaComponent } from '../pages/perfil/senha/senha.component';
 import { ControleComponent } from '../pages/controle/controle.component';
 import { RedirectGuard } from '../auth/RedirectGuard.guard';
 import { EsqueciSenhaComponent } from '../pages/auth/esqueci-senha/esqueci-senha.component';
+import { TermosDeUsoComponent } from '../pages/termos-de-uso/termos-de-uso.component';
+import { PoliticaDePrivacidadeComponent } from '../pages/politica-de-privacidade/politica-de-privacidade.component';
 
 export const routes: Routes = [
   {path: '', component: LoginComponent, canActivate: [RedirectGuard] },
@@ -23,5 +25,6 @@ export const routes: Routes = [
   {path: 'perfil/dados', component: DadosComponent, canActivate: [AuthGuard]},
   {path: 'perfil/senha', component: SenhaComponent, canActivate: [AuthGuard]},
   {path: 'controle/:jogo', component: ControleComponent, canActivate: [AuthGuard]},
-
+  {path: 'termoUso', component: TermosDeUsoComponent},
+  {path: 'politica', component: PoliticaDePrivacidadeComponent},
 ];
