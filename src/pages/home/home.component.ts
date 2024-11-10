@@ -19,6 +19,7 @@ export class HomeComponent {
   }
 
   velha(): void {
+    console.log(this.userData)
     if (this.userData) {
       const route = this.userData.controleId === 1 ? 
         ['controle', 'jogo-velha'] : 

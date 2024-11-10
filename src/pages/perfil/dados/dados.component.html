@@ -11,9 +11,15 @@
 
     <form [formGroup]="dadosForm" (ngSubmit)="onSubmit()" class="dados_pessoais">
         <div class="campo">
-            <label for="nome">NOME</label>
-            <input type="text" id="nome" formControlName="nome" placeholder="Nome" required>
-        </div>
+            <label for="nome">NOME DE USUÁRIO</label>
+            <input type="text" id="nome" class="controle-formulario" formControlName="nome" placeholder="Nome" required>
+            <div *ngIf="dadosForm.get('nome')?.hasError('required') && dadosForm.get('nome')?.touched">
+              <small class="error-text">O nome de usuário é obrigatório.</small>
+            </div>
+            <div *ngIf="dadosForm.get('nome')?.hasError('nomeReal') && dadosForm.get('nome')?.touched">
+              <small class="error-text">Por favor, escolha um nome de usuário válido, não um nome real.</small>
+            </div>
+          </div>
         <div class="campo">
             <label for="dataNascimento">DATA DE NASCIMENTO</label>
             <input type="date" id="dataNascimento" formControlName="dataNascimento" required>
@@ -34,3 +40,5 @@
         <button type="submit" class="button">Atualizar</button>
     </form>
 </div>
+
+<app-loading [isLoading]="isLoading"></app-loading>

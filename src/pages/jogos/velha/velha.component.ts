@@ -244,6 +244,7 @@ export class VelhaComponent implements OnInit, OnDestroy, AfterViewInit {
         [0, 4, 8], [2, 4, 6]
     ];
 
+    // Verificar vencedor
     for (const combinacao of combinacoesVitoria) {
         const [a, b, c] = combinacao;
         if (this.cellValues[a] && this.cellValues[a] === this.cellValues[b] && this.cellValues[a] === this.cellValues[c]) {
@@ -270,13 +271,24 @@ export class VelhaComponent implements OnInit, OnDestroy, AfterViewInit {
         }
     }
 
+    // Verificar empate
     if (!this.cellValues.includes(null)) {
       this.showEmpate = true;
       // Atualizar pontuação em caso de empate, se necessário
     }
 
+    // Verificar se há apenas uma casa vazia
+    if (this.cellValues.filter(cell => cell === null).length === 1) {
+        this.gameActive = false;
+        this.showEmpate = true; // Marca como empate
+        // Se necessário, registrar o empate no placar
+        this.modalTimer = setTimeout(() => {
+          this.reiniciarJogo();
+        }, 5000);
+    }
+
     return null;
-  }
+}
 
   private reiniciarJogo() {
     this.gameActive = false; 

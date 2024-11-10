@@ -37,6 +37,11 @@ html, body {
   margin: 0;
 }
 
+.error-text {
+  color: red;
+  font-size: 0.875em;
+}
+
 
 
 /* Jogos */

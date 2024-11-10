@@ -30,7 +30,7 @@ export class PlacarService {
   // Método para obter as maiores pontuações
   MaioresPontuacoes(id_jogo: number, id_controle: number): Observable<any> {
     this.loadingSubject.next(true);
-    const url = `${this.apiUrl}/maiores-pontuacoes-menos-tempos?id_jogo=${id_jogo}&id_controle=${id_controle}`;
+    const url = `${this.apiUrl}/maiores-pontuacoes?id_jogo=${id_jogo}&id_controle=${id_controle}`;
 
     return this.http.get(url, { headers: this.createHeaders() })
       .pipe(

@@ -1,14 +1,14 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../../../service/auth.service';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { ReactiveFormsModule } from '@angular/forms'; 
+import { AbstractControl, FormBuilder, FormControl, FormGroup, ReactiveFormsModule, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { UtilService } from '../../../service/util.service';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-cadastro',
   standalone: true,
-  imports: [ReactiveFormsModule],
+  imports: [ReactiveFormsModule, CommonModule],
   templateUrl: './cadastro.component.html',
   styleUrls: ['./cadastro.component.css']
 })
@@ -65,4 +65,20 @@ export class CadastroComponent implements OnInit {
   redefinirSenha(): void {
     this.router.navigate(['/redefinirSenha']);
   }
+}
+
+
+export function nomeUsuarioValidator(): ValidatorFn {
+  return (control: AbstractControl): ValidationErrors | null => {
+    const nome = control.value;
+
+    // Valida se o nome é alfanumérico e sem espaços
+    const nomeValido = /^[a-zA-Z0-9]+$/.test(nome); // Alfanumérico sem espaços
+
+    if (!nomeValido) {
+      return { nomeInvalido: true }; // Retorna erro caso o nome não seja válido
+    }
+
+    return null;
+  };
 }

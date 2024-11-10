@@ -1,5 +1,4 @@
-
-<!-- usuario Logado -->
+<!-- Usuario Logado -->
 <div *ngIf="isLogado && isDesktop" class="LayoutLogado">
     <app-navbar></app-navbar>
     <div class="mainConteudo">
@@ -9,10 +8,9 @@
     </div>
 </div>
 
-
-<!-- usuario deslogado -->
+<!-- Usuario Deslogado -->
 <div *ngIf="!isLogado && isDesktop" class="LayoutDeslogado" style="height: 100%;">
-    <ng-container >
+    <ng-container>
         <router-outlet></router-outlet>
     </ng-container>
 </div>
@@ -22,5 +20,5 @@
     <span>A Plataforma só está disponível para computadores</span>
 </ng-container>
 
-
+<!-- Componente de loading -->
 <app-loading [isLoading]="isLoading"></app-loading>

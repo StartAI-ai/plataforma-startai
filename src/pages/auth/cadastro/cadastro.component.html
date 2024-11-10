@@ -23,9 +23,16 @@
           <form [formGroup]="cadastroForm" (ngSubmit)="onSubmit()">
   
             <div class="form-group">
-              <label for="nome">NOME</label>
+              <label for="nome">NOME DE USUÁRIO</label>
               <input type="text" id="nome" class="controle-formulario" formControlName="nome" placeholder="Nome" required>
+              <div *ngIf="cadastroForm.get('nome')?.hasError('required') && cadastroForm.get('nome')?.touched">
+                <small class="error-text">O nome de usuário é obrigatório.</small>
+              </div>
+              <div *ngIf="cadastroForm.get('nome')?.hasError('nomeReal') && cadastroForm.get('nome')?.touched">
+                <small class="error-text">Por favor, escolha um nome de usuário válido, não um nome real.</small>
+              </div>
             </div>
+          
   
             <div class="form-group">
               <label for="email">EMAIL</label>
