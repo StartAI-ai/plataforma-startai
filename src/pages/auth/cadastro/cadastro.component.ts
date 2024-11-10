@@ -27,7 +27,7 @@ export class CadastroComponent implements OnInit {
 
   private initializeForm(): void {
     this.cadastroForm = new FormGroup({
-      nome: new FormControl('', [Validators.required]),
+      username: new FormControl('', [Validators.required]),
       email: new FormControl('', [Validators.required, Validators.email]),
       senha: new FormControl('', [Validators.required, Validators.minLength(6)]),
       dataNascimento: new FormControl('', [Validators.required, this.utilService.validarData]),
@@ -44,9 +44,9 @@ export class CadastroComponent implements OnInit {
   }
 
   private cadastrarUsuario(): void {
-    const { nome, email, senha, dataNascimento, controle } = this.cadastroForm.value;
+    const { username, email, senha, dataNascimento, controle } = this.cadastroForm.value;
 
-    this.authService.cadastro(nome, email, senha, dataNascimento, controle).subscribe({
+    this.authService.cadastro(username, email, senha, dataNascimento, controle).subscribe({
       next: (response) => {
         alert('Usuário cadastrado com sucesso!');
         this.router.navigate(['/login']); 

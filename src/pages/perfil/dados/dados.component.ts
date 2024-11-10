@@ -22,7 +22,7 @@ export class DadosComponent implements OnInit {
     private router: Router
   ) {
     this.dadosForm = this.formBuilder.group({
-      nome: ['', Validators.required],
+      username: ['', Validators.required],
       dataNascimento: ['', Validators.required],
       email: ['', [Validators.required, Validators.email]],
       controle: ['', Validators.required]
@@ -36,7 +36,7 @@ export class DadosComponent implements OnInit {
       this.perfilService.getDadosPessoais(userId).subscribe(
         data => {
           this.dadosForm.patchValue({
-            nome: data.nome,
+            username: data.username,
             dataNascimento: data.dataNascimento,
             email: data.email,
             controle: data.controleId,
