@@ -27,10 +27,10 @@ export class CadastroComponent implements OnInit {
 
   private initializeForm(): void {
     this.cadastroForm = new FormGroup({
-      username: new FormControl('', [Validators.required]),
+      nome: new FormControl('', [Validators.required]),
       email: new FormControl('', [Validators.required, Validators.email]),
       senha: new FormControl('', [Validators.required, Validators.minLength(6)]),
-      dataNascimento: new FormControl('', [Validators.required, this.utilService.validarData]),
+      dataNascimento: new FormControl('', [Validators.required]),
       controle: new FormControl('', [Validators.required]),
     });
   }
@@ -44,9 +44,9 @@ export class CadastroComponent implements OnInit {
   }
 
   private cadastrarUsuario(): void {
-    const { username, email, senha, dataNascimento, controle } = this.cadastroForm.value;
+    const { nome, email, senha, dataNascimento, controle } = this.cadastroForm.value;
 
-    this.authService.cadastro(username, email, senha, dataNascimento, controle).subscribe({
+    this.authService.cadastro(nome, email, senha, dataNascimento, controle).subscribe({
       next: (response) => {
         alert('Usuário cadastrado com sucesso!');
         this.router.navigate(['/login']); 
@@ -67,18 +67,3 @@ export class CadastroComponent implements OnInit {
   }
 }
 
-
-export function nomeUsuarioValidator(): ValidatorFn {
-  return (control: AbstractControl): ValidationErrors | null => {
-    const nome = control.value;
-
-    // Valida se o nome é alfanumérico e sem espaços
-    const nomeValido = /^[a-zA-Z0-9]+$/.test(nome); // Alfanumérico sem espaços
-
-    if (!nomeValido) {
-      return { nomeInvalido: true }; // Retorna erro caso o nome não seja válido
-    }
-
-    return null;
-  };
-}

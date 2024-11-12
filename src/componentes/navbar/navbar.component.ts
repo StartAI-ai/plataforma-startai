@@ -31,7 +31,7 @@ export class NavbarComponent {
         this.authService.deletar(userId).subscribe(
             response => {
                 alert('Sua conta foi excluída com sucesso.');
-                this.router.navigate(['/login']); // Ajuste a rota conforme sua aplicação
+                this.authService.logout();  
               },
             error => {
                 alert('Erro ao excluir a conta. Por favor, tente novamente.');
