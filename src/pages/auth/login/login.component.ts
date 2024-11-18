@@ -62,5 +62,9 @@ export class LoginComponent implements OnInit {
   cadastrar(): void {
     this.router.navigate(['/cadastro']);
   }
+
+  termoUso(): void {
+    this.router.navigate(['/termoUso']);
+  }
 }
 

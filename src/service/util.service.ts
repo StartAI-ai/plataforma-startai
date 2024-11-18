@@ -18,16 +18,33 @@ export class UtilService {
     }, 3000); 
   }
 
-  validarData(control: AbstractControl): ValidationErrors | null {
-    if (!control.value) {
-      return null; 
+  // Validador customizado para a data de nascimento
+  dataNascimentoValidator(control: AbstractControl): ValidationErrors | null {
+    const dataSelecionada = new Date(control.value);
+    const dataHoje = new Date();
+
+    // Verifica se a data é válida
+    if (isNaN(dataSelecionada.getTime())) {
+      return { 'dataInvalida': true }; // Se a data não for válida
     }
-  
-    const data = new Date(control.value);
-    const dataValida = !isNaN(data.getTime()); 
-  
-    return dataValida ? null : { dataInvalida: 'Data inválida' }; 
+
+    // Verifica se a data é no futuro
+    if (dataSelecionada > dataHoje) {
+      return { 'dataFutura': true }; // Se a data for futura
+    }
+
+    // Verifica se o ano da data é muito distante (exemplo: abaixo de 1900)
+    const anoMinimo = 1900;
+    if (dataSelecionada.getFullYear() < anoMinimo) {
+      return { 'anoMuitoAntigo': true }; // Se o ano for menor que 1900
+    }
+
+    // Verifica se o ano é maior que 2100
+    if (dataSelecionada.getFullYear() > 2100) {
+      return { 'anoMuitoDistante': true }; // Se o ano for maior que 2100
+    }
+
+    return null; // Se a data for válida
   }
-  
 
 }

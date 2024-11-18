@@ -20,11 +20,35 @@
               <small class="error-text">Por favor, escolha um nome de usuário válido, não um nome real.</small>
             </div>
           </div>
-        <div class="campo">
+          <div class="campo">
             <label for="dataNascimento">DATA DE NASCIMENTO</label>
-            <input type="date" id="dataNascimento" formControlName="dataNascimento" required>
-        </div>
-        <div class="campo">
+            <input 
+              type="date" 
+              id="dataNascimento" 
+              formControlName="dataNascimento"
+              class="controle-formulario"
+              required
+            >
+            <div *ngIf="dadosForm.get('dataNascimento')?.hasError('dataInvalida') && dadosForm.get('dataNascimento')?.touched">
+              <small class="text-danger">Data inválida. Por favor, insira uma data válida.</small>
+            </div>
+        
+            <!-- Verificação de erro para 'dataFutura' -->
+            <div *ngIf="dadosForm.get('dataNascimento')?.hasError('dataFutura') && dadosForm.get('dataNascimento')?.touched">
+              <small class="text-danger">Não é permitido selecionar uma data futura.</small>
+            </div>
+        
+            <!-- Verificação de erro para 'anoMuitoDistante' -->
+            <div *ngIf="dadosForm.get('dataNascimento')?.hasError('anoMuitoDistante') && dadosForm.get('dataNascimento')?.touched">
+              <small class="text-danger">O ano selecionado é muito distante. Por favor, insira um ano mais recente.</small>
+            </div>
+        
+            <!-- Verificação de erro para 'anoMuitoAntigo' -->
+            <div *ngIf="dadosForm.get('dataNascimento')?.hasError('anoMuitoAntigo') && dadosForm.get('dataNascimento')?.touched">
+              <small class="text-danger">O ano selecionado é muito antigo. Insira uma data de nascimento válida a partir de 1900.</small>
+            </div>
+          </div>
+      <div class="campo">
             <label for="email">EMAIL</label>
             <input type="email" id="email" formControlName="email" placeholder="Email" required>
         </div>
@@ -37,7 +61,7 @@
                 <option value=3>Teclado</option>
             </select>
         </div>
-        <button type="submit" class="button">Atualizar</button>
+        <button type="submit" class="button" [disabled]="dadosForm.invalid">Atualizar</button>
     </form>
 </div>
 

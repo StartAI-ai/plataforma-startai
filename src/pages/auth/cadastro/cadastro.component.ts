@@ -30,10 +30,14 @@ export class CadastroComponent implements OnInit {
       nome: new FormControl('', [Validators.required]),
       email: new FormControl('', [Validators.required, Validators.email]),
       senha: new FormControl('', [Validators.required, Validators.minLength(6)]),
-      dataNascimento: new FormControl('', [Validators.required]),
+      dataNascimento: new FormControl('', [
+        Validators.required, 
+        this.utilService.dataNascimentoValidator 
+      ]),
       controle: new FormControl('', [Validators.required]),
     });
   }
+
 
   onSubmit(): void {
     if (this.cadastroForm.valid) {
@@ -64,6 +68,14 @@ export class CadastroComponent implements OnInit {
 
   redefinirSenha(): void {
     this.router.navigate(['/redefinirSenha']);
+  }
+
+  termoUso(): void {
+    this.router.navigate(['/termoUso']);
+  }
+
+  politica(): void {
+    this.router.navigate(['/politica']);
   }
 }
 

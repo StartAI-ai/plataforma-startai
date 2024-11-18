@@ -2,18 +2,20 @@ import { Component } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { AuthService } from '../../../service/auth.service';
 import { Router } from '@angular/router';
+import { UtilService } from '../../../service/util.service';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-esqueci-senha',
   standalone: true,
-  imports: [ReactiveFormsModule],
+  imports: [ReactiveFormsModule, CommonModule],
   templateUrl: './esqueci-senha.component.html',
   styleUrls: ['./esqueci-senha.component.css']
 })
 export class EsqueciSenhaComponent {
   redefinirForm: FormGroup;
 
-  constructor(private authService: AuthService, private router: Router) {
+  constructor(private authService: AuthService, private router: Router, private utilService: UtilService) {
     this.redefinirForm = this.criarFormulario(); 
   }
 
@@ -21,7 +23,10 @@ export class EsqueciSenhaComponent {
     return new FormGroup({
       email: new FormControl('', [Validators.required, Validators.email]),
       senha: new FormControl('', [Validators.required, Validators.minLength(6)]),
-      dataNascimento: new FormControl('', [Validators.required]), 
+      dataNascimento: new FormControl('', [
+        Validators.required, 
+        this.utilService.dataNascimentoValidator 
+      ]),
     });
   }
 

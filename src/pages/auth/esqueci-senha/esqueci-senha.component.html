@@ -24,7 +24,31 @@
             
             <div class="form-group">
               <label for="dataNascimento">DATA DE NASCIMENTO</label>
-              <input type="date" id="dataNascimento" class="controle-formulario" formControlName="dataNascimento" required>
+              <input 
+                type="date" 
+                id="dataNascimento" 
+                formControlName="dataNascimento"
+                class="controle-formulario"
+                required
+              >
+              <div *ngIf="redefinirForm.get('dataNascimento')?.hasError('dataInvalida') && redefinirForm.get('dataNascimento')?.touched">
+                <small class="text-danger">Data inválida. Por favor, insira uma data válida.</small>
+              </div>
+          
+              <!-- Verificação de erro para 'dataFutura' -->
+              <div *ngIf="redefinirForm.get('dataNascimento')?.hasError('dataFutura') && redefinirForm.get('dataNascimento')?.touched">
+                <small class="text-danger">Não é permitido selecionar uma data futura.</small>
+              </div>
+          
+              <!-- Verificação de erro para 'anoMuitoDistante' -->
+              <div *ngIf="redefinirForm.get('dataNascimento')?.hasError('anoMuitoDistante') && redefinirForm.get('dataNascimento')?.touched">
+                <small class="text-danger">O ano selecionado é muito distante. Por favor, insira um ano mais recente.</small>
+              </div>
+          
+              <!-- Verificação de erro para 'anoMuitoAntigo' -->
+              <div *ngIf="redefinirForm.get('dataNascimento')?.hasError('anoMuitoAntigo') && redefinirForm.get('dataNascimento')?.touched">
+                <small class="text-danger">O ano selecionado é muito antigo. Insira uma data de nascimento válida a partir de 1900.</small>
+              </div>
             </div>
   
             <div class="form-group">

@@ -47,4 +47,12 @@ export class NavbarComponent {
     return userData ? JSON.parse(userData) : null;
   }
 
+  termoUso(): void {
+    this.router.navigate(['/termoUso']);
+  }
+
+  politica(): void {
+    this.router.navigate(['/politica']);
+  }
+
 }

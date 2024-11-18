@@ -80,6 +80,6 @@
     </div>
 </div>
 
-<app-modal-novo-jogo *ngIf="showVitoria" [title]="'Parabéns!! Você ganhou!! O que acha de jogar novamente?'"></app-modal-novo-jogo>
-<app-modal-novo-jogo *ngIf="showDerrota" [title]="'Lamento!! Você perdeu!! O que acha de jogar novamente?'"></app-modal-novo-jogo>
-<app-modal-novo-jogo *ngIf="showEmpate" [title]="'Deu Empate!! O que acha de jogar novamente?'"></app-modal-novo-jogo>
+<app-modal-novo-jogo *ngIf="showVitoria" [mensagem]="'Parabéns!! Você ganhou!!'"></app-modal-novo-jogo>
+<app-modal-novo-jogo *ngIf="showDerrota" [mensagem]="'Lamento!! Você perdeu!!'"></app-modal-novo-jogo>
+<app-modal-novo-jogo *ngIf="showEmpate" [mensagem]="'Deu Empate!!'"></app-modal-novo-jogo>

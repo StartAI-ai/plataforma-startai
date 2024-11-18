@@ -1,9 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { AbstractControl, FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { AbstractControl, FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { PerfilService } from '../../../service/perfil.service';
 import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { LoadingComponent } from '../../../componentes/loading/loading.component';
+import { UtilService } from '../../../service/util.service';
 
 @Component({
   selector: 'app-dados',
@@ -14,16 +15,20 @@ import { LoadingComponent } from '../../../componentes/loading/loading.component
 })
 export class DadosComponent implements OnInit {
   dadosForm: FormGroup;
-  isLoading = false;  // Variável para controlar o estado de carregamento
+  isLoading = false;  
 
   constructor(
     private formBuilder: FormBuilder,
     private perfilService: PerfilService,
+    private utilService: UtilService,
     private router: Router
   ) {
     this.dadosForm = this.formBuilder.group({
       nome: ['', Validators.required],
-      dataNascimento: ['', Validators.required],
+      dataNascimento: new FormControl('', [
+        Validators.required, 
+        this.utilService.dataNascimentoValidator 
+      ]),
       email: ['', [Validators.required, Validators.email]],
       controle: ['', Validators.required]
     });

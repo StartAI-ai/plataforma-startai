@@ -152,8 +152,9 @@ export class VelhaComponent implements OnInit, OnDestroy, AfterViewInit {
     }
   }
 
-  iniciarSelecao() {
+  private iniciarSelecao() {
     if (this.gameActive) {
+      console.log("Iniciando seleção...");
       this.subscription = interval(1500).subscribe(() => {
         if (this.gameActive) {
           this.atualizarSelecao();
@@ -161,7 +162,7 @@ export class VelhaComponent implements OnInit, OnDestroy, AfterViewInit {
       });
     }
   }
-
+  
   atualizarSelecao() {
     const previousCell = document.getElementById(`cell${this.selectedIndex}`);
     if (previousCell) {
@@ -226,6 +227,7 @@ export class VelhaComponent implements OnInit, OnDestroy, AfterViewInit {
       const vencedor = this.verificarVencedor();
       if (vencedor) {
         this.gameActive = false;
+        this.showDerrota = true;
         return;
       }
 
@@ -280,7 +282,7 @@ export class VelhaComponent implements OnInit, OnDestroy, AfterViewInit {
     // Verificar se há apenas uma casa vazia
     if (this.cellValues.filter(cell => cell === null).length === 1) {
         this.gameActive = false;
-        this.showEmpate = true; // Marca como empate
+        this.showEmpate = true;
         // Se necessário, registrar o empate no placar
         this.modalTimer = setTimeout(() => {
           this.reiniciarJogo();
@@ -290,53 +292,53 @@ export class VelhaComponent implements OnInit, OnDestroy, AfterViewInit {
     return null;
 }
 
-  private reiniciarJogo() {
-    this.gameActive = false; 
-    this.cellValues.fill(null);
-    this.jogadas = 0; // Resetar contador de jogadas
-    this.tempo = 0; // Resetar tempo
+private reiniciarJogo() {
+  this.gameActive = false; 
+  this.cellValues.fill(null);
+  this.jogadas = 0; // Resetar contador de jogadas
+  this.tempo = 0; // Resetar tempo
 
-    // Remover marcações e conteúdo de todas as células no DOM
-    for (let index = 0; index < this.cellValues.length; index++) {
-        const cell = document.getElementById(`cell${index}`);
-        if (cell) {
-            cell.classList.remove('marcada', 'jogador', 'bot'); // Remover todas as classes
-            cell.innerHTML = ''; // Limpar o conteúdo da célula
-        }
-    }
+  // Remover marcações e conteúdo de todas as células no DOM
+  for (let index = 0; index < this.cellValues.length; index++) {
+      const cell = document.getElementById(`cell${index}`);
+      if (cell) {
+          cell.classList.remove('marcada', 'jogador', 'bot'); // Remover todas as classes
+          cell.innerHTML = ''; // Limpar o conteúdo da célula
+      }
+  }
 
-    // Desativar a seleção atual para evitar múltiplos seletores
-    const previousCell = document.getElementById(`cell${this.selectedIndex}`);
-    if (previousCell) {
-      previousCell.classList.remove('selected');
-    }
-   
+  // Desativar a seleção atual para evitar múltiplos seletores
+  const previousCell = document.getElementById(`cell${this.selectedIndex}`);
+  if (previousCell) {
+    previousCell.classList.remove('selected');
+  }
 
-    // Resetar estados do jogo
-    this.selectedIndex = 0;
-    this.showVitoria = false;
-    this.showDerrota = false;
-    this.showEmpate = false;
-    this.botHasPlayed = false;
+  // Resetar estados do jogo
+  this.selectedIndex = 0;
+  this.showVitoria = false;
+  this.showDerrota = false;
+  this.showEmpate = false;
+  this.botHasPlayed = false;
 
-    // Limpar modalTimer, se existir
-    if (this.modalTimer) {
-        clearTimeout(this.modalTimer);
-        this.modalTimer = null;
-    }
+  // Limpar modalTimer, se existir
+  if (this.modalTimer) {
+      clearTimeout(this.modalTimer);
+      this.modalTimer = null;
+  }
 
-    // Limpar a subscription existente para evitar múltiplos intervalos
-    if (this.subscription) {
-        this.subscription.unsubscribe();
-    }
+  // Limpar a subscription existente para evitar múltiplos intervalos
+  if (this.subscription) {
+      this.subscription.unsubscribe();
+  }
 
-    // Reiniciar a seleção após um curto intervalo
-    setTimeout(() => {
-        this.gameActive = true;
-        this.iniciarSelecao(); // Iniciar seleção apenas após limpar
-    }, 100); // Pode ajustar o tempo conforme necessário
+  this.gameActive = true;
 
-    this.initializePlacar();
+  // Reativa o jogo e o seletor, se necessário
+  if (this.gameMode === 2) {
+    this.iniciarSelecao(); // Inicia o seletor novamente no modo 2
+  }
+
+  this.initializePlacar(); // Inicializar placar novamente
   }
 
   voltar(): void {
