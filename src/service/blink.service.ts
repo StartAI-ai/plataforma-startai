@@ -4,7 +4,7 @@ import { ElementRef, EventEmitter, Injectable } from '@angular/core';
   providedIn: 'root'
 })
 export class BlinkService {
-  private fixedEyeHeight!: number;
+  private fixedEyeHeight: number = 0.5;
   private blinkRegistered = false;
 
   public blinkDetected = new EventEmitter<void>();
@@ -12,13 +12,6 @@ export class BlinkService {
   private camera: any;
 
   constructor() {}
-
-  public registerEyeHeight(currentEyeHeight: number): void {
-    if (!this.fixedEyeHeight) {
-      this.fixedEyeHeight = currentEyeHeight / 4;
-      console.log('Altura registrada do olho:', this.fixedEyeHeight);
-    }
-  }
 
   public detectBlink(currentEyeHeight: number): boolean {
     if (currentEyeHeight < this.fixedEyeHeight && !this.blinkRegistered) {
@@ -141,7 +134,6 @@ export class BlinkService {
     const leftEyeBottomY = leftEyeBottom.y * canvasHeight;
     const currentEyeHeight = leftEyeBottomY - leftEyeTopY;
 
-    this.registerEyeHeight(currentEyeHeight);
     this.detectBlink(currentEyeHeight);
   }
 }
